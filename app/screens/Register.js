@@ -1,9 +1,12 @@
-import { StyleSheet, Text, View, TouchableHighlight, Modal } from 'react-native'
+import { StyleSheet, Text, View, TouchableHighlight, Platform } from 'react-native'
 import { useState } from 'react';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import AppColors from '../config/AppColors'
 import AppScreen from '../components/AppScreen'
 import DefaultInputText from '../components/DefaultTextInput';
+import TextLink from '../components/TextLink';
+import DataManager from '../config/DataManager';
 
 export default function Register() {
   // User Inputs
@@ -12,65 +15,86 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVerify, setPasswordVerify] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState(new Date());
 
-  // Component Visibility
-  const [datePickerVisible, setDatePickerVisible] = useState(false);
+  // Visibility
+  const [showDate, setShowDate] = useState(false);
 
-  const handleSubmit = () => {
-    let errorOccurred = false;
+  const inputValidation = () => {
+    let isCorrect = true;
     // Name Validation
     if(firstName === "") {
       console.log("First Name field must be filled");
-      errorOccurred = true;
+      isCorrect = false;
     }
     if(lastName === "") {
       console.log("Last Name field must be filled");
-      errorOccurred = true;
+      isCorrect = false;
     }
 
     // DOB Validation
     if(date === "") {
       console.log("DOB field must be filled");
-      errorOccurred = true;
+      isCorrect = false;
     }
 
     // Email Validation
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
     if(email === "") {
       console.log("Email field must be filled")
-      errorOccurred = true;
+      isCorrect = false;
     }
     if(reg.test(email) == false) {
-      console.log("Invalid Email Address");
-      errorOccurred = true;
+      console.log("Invalid Email Address: ", email);
+      isCorrect = false;
     }     
 
     // Password Validation
     if(password === "") {
       console.log("Password field must be filled");
-      errorOccurred = true;
+      isCorrect = false;
     }
     if(passwordVerify === "") {
       console.log("Password Verification field must be filled");
-      errorOccurred = true;
+      isCorrect = false;
     } else if(password !== "" && password !== passwordVerify) {
       console.log("Password Verification doesn't match - " + password + ":" + passwordVerify);
-      errorOccurred = true;
+      isCorrect = false;
+    }
+    
+    if(!isCorrect) {
+      console.log("Screen Shakes")
     }
 
-    if(errorOccurred) {
-      console.log("Screen Shakes");
+    return isCorrect;
+  }
+  const handleSubmit = () => {
+    const dm = DataManager.getInstance();
+    if(!inputValidation()) 
+      return;
+    else if(dm.getUser(email) > 0) {
+      alert("Email is already in use");
       return;
     }
 
-    console.log("Information has been imprinted and user is brought to login/account screen. (Haven't decided yet)");
+    const user = {
+      userId: dm.generateUserId(),
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      dob: date.toLocaleDateString(),
+      password: password
+    }
+
+    dm.createUser(user);
+
+    // TODO: Navigate to Home Screen
   }
 
   return (
     <AppScreen>
-      <Text>Sign Up</Text>
-      <View>
+      <Text style={styles.heading}>Sign Up</Text>
+      <View style={styles.form}>
         <DefaultInputText
           placeholder="First Name"
           state={firstName}
@@ -81,14 +105,31 @@ export default function Register() {
           state={lastName}
           setState={setLastName}
         />
-        <TouchableHighlight onPress={() => setDatePickerVisible(true)} style={styles.dateTouchable}>
-          <DefaultInputText 
-            placeholder="Date of Birth"
-            state={date}
-            setState={setDate}
-            readOnly
-          />
+        <TouchableHighlight onPress={() => setShowDate(true)} style={styles.dateTouchable}>
+          {/* Touchable Highlight doesn't work without this view element */}
+          <View pointerEvents="none">
+            <DefaultInputText 
+                placeholder="Date of Birth"
+                state={date.toLocaleDateString()}
+                setState={setDate}
+                style={styles.dateText}
+              />
+          </View>
         </TouchableHighlight>
+        {showDate && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode="date"
+          display="default"
+          accentColor={AppColors.main}
+          androidVariant="iosClone"
+          onChange={(event, selectedDate) => {
+            setShowDate(false);
+            setDate(selectedDate);
+          }}
+        />
+        )}
         <DefaultInputText 
           placeholder="Email"
           state={email}
@@ -106,21 +147,38 @@ export default function Register() {
           setState={setPasswordVerify}
           secureTextEntry
         />
-      </View>
-      <TouchableHighlight style={styles.buttonTouch} onPress={handleSubmit}>
-        <View style={styles.button}><Text style={styles.text}>Sign Up</Text></View>
+        <TouchableHighlight style={styles.buttonTouchable} onPress={handleSubmit}>
+          <View style={styles.button}><Text style={styles.buttonText}>Sign Up</Text></View>
       </TouchableHighlight>
-
+      </View>
+      <View style={styles.switchView}>
+          <Text>Already have an account?</Text>
+          <TextLink>Login</TextLink>
+      </View>
     </AppScreen>
   )
 }
 
 const styles = StyleSheet.create({
+  heading: {
+    fontSize: 30,
+    fontWeight: "bold",
+    paddingHorizontal: 30,
+    paddingTop: 40,
+    paddingBottom: 20,
+  },
+  form: {
+    paddingHorizontal: 30,
+    gap: 15,
+  },
   dateTouchable: {
     borderRadius: 5,
   },
-
-  buttonTouch: {
+  dateText: {
+    color: "black",
+  },  
+  buttonTouchable: {
+    marginTop: 20,
     borderRadius: 10,
   },
   button: {
@@ -129,9 +187,13 @@ const styles = StyleSheet.create({
     paddingVertical: 25,
     borderRadius: 10,
   },
-  text: {
+  buttonText: {
     fontSize: 18,
     fontWeight: "bold",
     color: AppColors.lightShade,
+  },
+  switchView: {
+    padding: 40,
+    alignItems: "center",
   },
 })
