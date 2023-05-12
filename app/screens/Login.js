@@ -32,7 +32,7 @@ export default function Login() {
           setState={setPassword}
           secureTextEntry
         />
-        <View style={{alignItems: "flex-end"}}><TextLink navigateTo="testLocation">Forgot Password?</TextLink></View>
+        <View style={{alignItems: "flex-end"}}><TextLink>Forgot Password?</TextLink></View>
         <TouchableHighlight 
           onPress={handleSubmit}
           style={styles.loginTouchable}>
@@ -40,7 +40,7 @@ export default function Login() {
         </TouchableHighlight>
         <View style={styles.footer}>
           <Text style={styles.footerFluff}>Don't have an account?</Text>
-          <TextLink navigateTo="testLocation">Sign Up Today!</TextLink>
+          <TextLink>Sign Up Today!</TextLink>
         </View>
       </View>
     </AppScreen>

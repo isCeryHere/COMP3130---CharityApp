@@ -1,16 +1,10 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import AppColors from '../config/AppColors'
 
-export default function TextLink(
-  {
-    children,
-    navigateTo,
-  } :
-  {
-    children : string
-    navigateTo : string
-  }
-) {
+export default function TextLink({children, navigateTo}) {
+
+  // TODO: Change Navigation
+  const hey = navigateTo;
   return (
     <TouchableOpacity>
       <Text style={styles.text}>{children}</Text>

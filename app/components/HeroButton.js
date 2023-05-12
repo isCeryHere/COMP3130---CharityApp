@@ -2,14 +2,7 @@ import { StyleSheet, Text, TouchableHighlight, View } from 'react-native'
 
 import AppColors from '../config/AppColors'
 
-export default function HeroButton(
-  {
-    text,
-  } : 
-  {
-    text : string,
-  }
-) {
+export default function HeroButton({text}) {
   const onPress = () => {
       console.log("Button Pressed");
       alert("I doth been pressed");

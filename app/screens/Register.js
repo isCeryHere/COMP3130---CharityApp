@@ -1,7 +1,5 @@
 import { StyleSheet, Text, View, TouchableHighlight, Modal } from 'react-native'
 import { useState } from 'react';
-import DatePicker from 'react-native-modern-datepicker'
-import EncryptedStorage from 'react-native-encrypted-storage';
 
 import AppColors from '../config/AppColors'
 import AppScreen from '../components/AppScreen'
@@ -20,7 +18,7 @@ export default function Register() {
   const [datePickerVisible, setDatePickerVisible] = useState(false);
 
   const handleSubmit = () => {
-    let errorOccurred : boolean = false;
+    let errorOccurred = false;
     // Name Validation
     if(firstName === "") {
       console.log("First Name field must be filled");
@@ -69,36 +67,6 @@ export default function Register() {
     console.log("Information has been imprinted and user is brought to login/account screen. (Haven't decided yet)");
   }
 
-  const createUser = async () => {
-    // Checking if User already exists
-    try {   
-      const user = await EncryptedStorage.getItem(`user_${email}`);
-  
-      if (user !== undefined) {
-        console.log("User already exists. Try logging in!")
-        return;
-      }
-    } catch(error : any) {
-      console.log(error.code)
-    }
-
-    // Creating User in Storage
-    try {
-      await EncryptedStorage.setItem(
-        `user_${email}`,
-        JSON.stringify({
-          email: {email},
-          firstName: {firstName},
-          lastName: {lastName},
-          dob: {date},
-          password: {password}
-        })
-      );
-    } catch (error : any) {
-      console.log(error.code)
-    }
-  }
-
   return (
     <AppScreen>
       <Text>Sign Up</Text>
@@ -121,20 +89,6 @@ export default function Register() {
             readOnly
           />
         </TouchableHighlight>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={datePickerVisible}
-          onRequestClose={() => setDatePickerVisible(false)}
-        >
-          <DatePicker 
-            mode="calendar"
-            onDateChange={(date) => {
-              setDate(date);
-              setDatePickerVisible(false);
-            }}
-          />
-        </Modal>
         <DefaultInputText 
           placeholder="Email"
           state={email}

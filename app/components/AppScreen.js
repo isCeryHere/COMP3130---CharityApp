@@ -4,16 +4,10 @@ import Constants from 'expo-constants';
 
 import AppColors from '../config/AppColors';
 
-export default function AppScreen(
-  {
+export default function AppScreen({
     children, 
     statusStyle = "auto",
     backgroundColor = AppColors.lightShade
-  } : 
-  {
-    children:any, 
-    backgroundColor? : string, 
-    statusStyle? : any
   }) {
   return (
     <SafeAreaView style={
