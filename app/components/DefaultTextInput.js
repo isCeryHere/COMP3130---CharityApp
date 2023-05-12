@@ -30,5 +30,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 16,
     elevation: 15,
+    shadowColor: "black",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 6,
   },
 })
