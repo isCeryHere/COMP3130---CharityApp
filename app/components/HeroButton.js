@@ -1,11 +1,13 @@
 import { StyleSheet, Text, TouchableHighlight, View } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
 
 import AppColors from '../config/AppColors'
 
-export default function HeroButton({text}) {
+export default function HeroButton({text, navigateTo}) {
+  const navigation = useNavigation();
+
   const onPress = () => {
-      console.log("Button Pressed");
-      alert("I doth been pressed");
+    navigation.navigate(navigateTo);
   }
   return (
     <TouchableHighlight style={styles.buttonTouch} onPress={onPress}>

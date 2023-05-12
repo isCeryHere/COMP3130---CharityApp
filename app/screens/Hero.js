@@ -21,8 +21,8 @@ export default function Hero() {
           </Text>
         </View>
         <View style={styles.buttonContainer}>
-          <HeroButton text="Login"/>
-          <HeroButton text="Register"/>
+          <HeroButton text="Login" navigateTo="Login"/>
+          <HeroButton text="Sign Up" navigateTo="Register"/>
         </View>
       </View>
     </AppScreen>

@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, TouchableHighlight, Platform } from 'react-native'
 import { useState } from 'react';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { useNavigation } from '@react-navigation/native';
 
 import AppColors from '../config/AppColors'
 import AppScreen from '../components/AppScreen'
@@ -19,6 +20,8 @@ export default function Register() {
 
   // Visibility
   const [showDate, setShowDate] = useState(false);
+
+  const navigation = useNavigation();
 
   const inputValidation = () => {
     let isCorrect = true;
@@ -63,6 +66,7 @@ export default function Register() {
     }
     
     if(!isCorrect) {
+      alert("Registration Failed")
       console.log("Screen Shakes")
     }
 
@@ -89,6 +93,7 @@ export default function Register() {
     dm.createUser(user);
 
     // TODO: Navigate to Home Screen
+    navigation.navigate("Account");
   }
 
   return (
@@ -152,8 +157,10 @@ export default function Register() {
       </TouchableHighlight>
       </View>
       <View style={styles.switchView}>
-          <Text>Already have an account?</Text>
-          <TextLink>Login</TextLink>
+          <Text style={{fontSize: 16, fontWeight: "500"}}>
+            Already have an account?
+          </Text>
+          <TextLink navigateTo="Login">Login</TextLink>
       </View>
     </AppScreen>
   )

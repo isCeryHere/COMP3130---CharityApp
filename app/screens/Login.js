@@ -1,17 +1,30 @@
 import { StyleSheet, Text, View, TextInput, Button, TouchableHighlight } from 'react-native'
 import React, {useState} from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 import AppColors from '../config/AppColors'
 import AppScreen from '../components/AppScreen'
 import TextLink from '../components/TextLink';
 import DefaultInputText from '../components/DefaultTextInput';
+import DataManager from '../config/DataManager';
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  
+  const navigation = useNavigation();
 
   const handleSubmit = () => {
-    alert("You'll never login. Muhahahahaha.");
+    const dm = DataManager.getInstance();
+    const dmUser = dm.getUser(username);
+    if(!dmUser) {
+      alert("Login Failed");
+    }
+    if(dmUser.password == password) {
+      navigation.navigate("Account");
+    }  else {
+      alert("Login Failed");
+    }
   }
 
   return (
@@ -22,7 +35,7 @@ export default function Login() {
       </View>
       <View style={styles.form}>
         <DefaultInputText 
-          placeholder="Username"
+          placeholder="Email"
           state={username}
           setState={setUsername}
         />
@@ -40,7 +53,7 @@ export default function Login() {
         </TouchableHighlight>
         <View style={styles.footer}>
           <Text style={styles.footerFluff}>Don't have an account?</Text>
-          <TextLink>Sign Up Today!</TextLink>
+          <TextLink navigateTo="Register">Sign Up Today!</TextLink>
         </View>
       </View>
     </AppScreen>
