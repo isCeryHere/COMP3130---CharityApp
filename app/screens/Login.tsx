@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 import AppColors from '../config/AppColors'
 import AppScreen from '../components/AppScreen'
 import TextLink from '../components/TextLink';
+import DefaultInputText from '../components/DefaultTextInput';
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -20,18 +21,16 @@ export default function Login() {
         <Text style={styles.fluff}>Glad to have you back!</Text>
       </View>
       <View style={styles.form}>
-        <TextInput 
+        <DefaultInputText 
           placeholder="Username"
-          onChangeText={(newUser) => setUsername(newUser)}
-          defaultValue={username}
-          style={styles.input}
+          state={username}
+          setState={setUsername}
         />
-        <TextInput 
-          secureTextEntry={true}
+        <DefaultInputText 
           placeholder="Password"
-          onChangeText={(newPass) => setPassword(newPass)}
-          defaultValue={password}
-          style={styles.input}
+          state={password}
+          setState={setPassword}
+          secureTextEntry
         />
         <View style={{alignItems: "flex-end"}}><TextLink navigateTo="testLocation">Forgot Password?</TextLink></View>
         <TouchableHighlight 
@@ -67,14 +66,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 30,
     gap: 10,
-  },
-  input: {
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    backgroundColor: AppColors.lightShade,
-    borderRadius: 5,
-    fontSize: 16,
-    elevation: 15,
   },
   loginTouchable: {
     borderRadius: 5, 
