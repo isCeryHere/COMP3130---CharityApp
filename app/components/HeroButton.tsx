@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   button: {
-    backgroundColor: AppColors.lightAccent,
+    backgroundColor: AppColors.main,
     alignItems: "center",
     paddingVertical: 25,
     borderRadius: 10,
@@ -34,5 +34,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     fontWeight: "bold",
+    color: AppColors.lightShade,
   },
 })
