@@ -2,19 +2,15 @@ import { StyleSheet, TextInput, TextStyle } from 'react-native'
 
 import AppColors from '../config/AppColors';
 
-export default function DefaultInputText({
+export default function DefaultTextInput({
     style,
     placeholder,
-    state,
-    setState,
     secureTextEntry = false,
     ...props
   }) {  
   return (
     <TextInput 
       placeholder={placeholder}
-      onChangeText={(newText) => setState(newText)}
-      defaultValue={state}
       style={[styles.input, style]}
       secureTextEntry={secureTextEntry}
       {...props}
