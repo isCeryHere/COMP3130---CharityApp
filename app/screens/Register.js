@@ -22,10 +22,6 @@ export default function Register() {
 			.email("Invalid Email Address")
 			.required("Email is required"),
 		password: yup.string().required("Password is required"),
-		confirmPassword: yup
-			.string()
-			.required("Password Confirmation is required")
-			.oneOf([yup.ref("password"), null], "Passwords must match"),
 	});
 
 	// Visibility
@@ -65,7 +61,6 @@ export default function Register() {
 					dob: "",
 					email: "",
 					password: "",
-					confirmPassword: "",
 				}}
 				onSubmit={submitRegistration}
 				validationSchema={validationSchema}
@@ -146,17 +141,6 @@ export default function Register() {
 						{submitted && errors.password && (
 							<ErrorText>{errors.password}</ErrorText>
 						)}
-						<DefaultTextInput
-							placeholder="Confirm Password"
-							onChangeText={handleChange("confirmPassword")}
-							onBlur={handleBlur("confirmPassword")}
-							value={values.confirmPassword}
-							secureTextEntry
-						/>
-						{submitted && errors.confirmPassword && (
-							<ErrorText>{errors.confirmPassword}</ErrorText>
-						)}
-
 						<TouchableHighlight
 							style={styles.buttonTouchable}
 							onPress={() => {
