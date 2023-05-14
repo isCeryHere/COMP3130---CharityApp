@@ -32,24 +32,25 @@ export default function Register() {
 
 	const submitRegistration = (values) => {
 		const dm = DataManager.getInstance();
-		if (dm.getUser(values.email) > 0) {
+		if (dm.getUser(values.email).length > 0) {
 			alert("Email is already in use");
 			return;
 		}
 
-		const user = {
+		const user = { 
 			userId: dm.generateUserId(),
 			email: values.email,
 			firstName: values.firstName,
 			lastName: values.lastName,
 			dob: values.dob.toISOString(),
 			password: values.password,
+			collections: dm.generateDefaultCollection(),
 		};
 
 		dm.createUser(user);
-		console.log(user);
-		// navigation.navigate("Account");
+		navigation.navigate("Account");
 	};
+
 
 	return (
 		<AppScreen>
@@ -116,6 +117,7 @@ export default function Register() {
 								onBlur={handleBlur("date")}
 								mode="date"
 								display="default"
+								maximumDate={new Date()}
 								accentColor={AppColors.main}
 								onChange={(event, selectedDate) => {
 									setShowDate(false);
