@@ -16,7 +16,7 @@ export default function Register() {
 	const validationSchema = yup.object({
 		firstName: yup.string().required("First Name is required"),
 		lastName: yup.string().required("Last Name is required"),
-		dob: yup.string().nullable().required("Date of Birth is required"),
+		dob: yup.date().nullable().required("Date of Birth is required"),
 		email: yup
 			.string()
 			.email("Invalid Email Address")
@@ -42,7 +42,7 @@ export default function Register() {
 			email: values.email,
 			firstName: values.firstName,
 			lastName: values.lastName,
-			dob: values.dob,
+			dob: values.dob.toISOString(),
 			password: values.password,
 		};
 
@@ -58,7 +58,7 @@ export default function Register() {
 				initialValues={{
 					firstName: "",
 					lastName: "",
-					dob: "",
+					dob: null,
 					email: "",
 					password: "",
 				}}
@@ -102,7 +102,7 @@ export default function Register() {
 									placeholder="Date of Birth"
 									onChangeText={handleChange("dob")}
 									onBlur={handleBlur("dob")}
-									value={values.dob}
+									value={values.dob ? values.dob.toLocaleDateString() : ""}
 									style={styles.dateText}
 									readOnly
 								/>
@@ -112,15 +112,14 @@ export default function Register() {
 						{showDate && (
 							<DateTimePicker
 								testID="dateTimePicker"
-								value={Date.parse(values.dob) || new Date()}
+								value={values.dob || new Date()}
 								onBlur={handleBlur("date")}
 								mode="date"
 								display="default"
 								accentColor={AppColors.main}
-								androidVariant="iosClone"
 								onChange={(event, selectedDate) => {
 									setShowDate(false);
-									setFieldValue("dob", selectedDate.toLocaleDateString());
+									setFieldValue("dob", selectedDate);
 								}}
 							/>
 						)}
