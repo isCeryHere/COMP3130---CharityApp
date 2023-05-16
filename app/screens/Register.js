@@ -32,13 +32,14 @@ export default function Register() {
 
 	const submitRegistration = (values) => {
 		const dm = DataManager.getInstance();
-		if (dm.getUser(values.email).length > 0) {
+		if (dm.getUser(values.email)) {
 			alert("Email is already in use");
 			return;
 		}
 
 		const user = { 
 			userId: dm.generateUserId(),
+			image: null,
 			email: values.email,
 			firstName: values.firstName,
 			lastName: values.lastName,
@@ -48,7 +49,7 @@ export default function Register() {
 		};
 
 		dm.createUser(user);
-		navigation.navigate("Account");
+		navigation.navigate("Home");
 	};
 
 

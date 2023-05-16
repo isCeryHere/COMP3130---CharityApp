@@ -1,21 +1,16 @@
 import { StyleSheet } from "react-native";
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 
-import Hero from "./app/screens/Hero";
-import Login from "./app/screens/Login";
-import Register from "./app/screens/Register";
+import AuthNavigator from "./app/navigation/AuthNavigator";
+import CollectionNavigator from "./app/navigation/CollectionNavigator";
+import Home from "./app/screens/Home";
+import Account from "./app/screens/Account";
+import Collection from "./app/screens/Collection";
 
 export default function App() {
-  const Stack = createNativeStackNavigator();
-
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Hero" component={Hero} />
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Register" component={Register} />
-      </Stack.Navigator>
+      <AuthNavigator />
     </NavigationContainer>
   );
 }

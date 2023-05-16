@@ -26,16 +26,16 @@ export default function Login() {
 	const submitLogin = (values) => {
 		const dm = DataManager.getInstance();
 		const dmUser = dm.getUser(values.email);
-
-		if (dmUser.length == 0) {
+		
+		if (!dmUser) {
 			alert("User does not exist");
 			return;
-		} else if (dmUser[0].password !== values.password) {
+		} else if (dmUser.password !== values.password) {
 			alert("Login Failed");
 			return;
 		}
 
-		navigation.navigate("Account");
+		navigation.navigate("Home");
 	};
 
 	return (
