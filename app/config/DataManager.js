@@ -180,6 +180,9 @@ export default class DataManager {
 			this.userData[i].userId = i - 1;
 		}
 	}
+	removeCurrentUser() {
+		this.currentUser = null;
+	}
 
   generateDefaultCollection() {
     const currentDate = new Date().toISOString();

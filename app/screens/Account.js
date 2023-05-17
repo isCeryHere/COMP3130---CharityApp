@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Button, Image, TouchableOpacity } from "react-native";
 import { useState } from "react";
 import * as ImagePicker from 'expo-image-picker';
+import { useNavigation, CommonActions } from "@react-navigation/native";
 
 
 import Title from "../components/Title";
@@ -9,8 +10,10 @@ import DataManager from "../config/DataManager";
 import AppColors from "../config/AppColors";
 
 export default function Account() {
+  const navigation = useNavigation();
+
   const dm = DataManager.getInstance();
-	const user = dm.getCurrentUser();
+  const user = dm.getCurrentUser();
   const [image, setImage] = useState(user.image);
 
   const pickImage = async () => {
@@ -30,6 +33,15 @@ export default function Account() {
     pickImage();
     dm.updateUser("image", image);
 
+  }
+  const handleLogout = () => {
+    navigation.dispatch(
+    CommonActions.reset({
+      index: 0,
+      routes: [{ name: "Hero" }],
+    }));
+    
+    dm.removeCurrentUser();
   }
 
   
@@ -54,7 +66,7 @@ export default function Account() {
 					<Text style={styles.fieldHeading}>Date of Birth: </Text>
 					{new Date(user.dob).toLocaleDateString()}
 				</Text>
-        <Button title="Logout" color={AppColors.main} />
+        <Button title="Logout" color={AppColors.main} onPress={handleLogout}/>
 			</View>
 		</AppScreen>
 	);
