@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
 import React, { useState } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, CommonActions } from "@react-navigation/native";
 import { Formik } from "formik";
 import * as yup from "yup";
 
@@ -35,7 +35,10 @@ export default function Login() {
 			return;
 		}
 
-		navigation.navigate("Home");
+		navigation.dispatch(
+			CommonActions.reset({
+				routes: [{ name: 'Home' }],
+			}));
 	};
 
 	return (
