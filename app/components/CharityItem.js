@@ -11,7 +11,7 @@ import { useState } from "react";
 import AppColors from "../config/AppColors";
 import CharityModal from "./CharityModal";
 
-export default function CharityTab({ charity }) {
+export default function CharityItem({ charity }) {
 	const [modalVisible, setModalVisible] = useState(false);
 	const navigation = useNavigation();
 	return (

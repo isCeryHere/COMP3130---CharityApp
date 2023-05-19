@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import AppColors from "../config/AppColors";
 
-export default function CollectionTab({ collection }) {
+export default function CollectionItem({ collection }) {
 	const navigation = useNavigation();
 
 	const defaultImg = require("../assets/defaultFolder.png");
