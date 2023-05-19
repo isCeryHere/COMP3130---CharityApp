@@ -13,12 +13,12 @@ export default function CollectionTab({ collection }) {
 			style={styles.touchableContainer}
 			activeOpacity={0.8}
 			onPress={() => {
-				navigation.navigate("CategoriesStack", { collection });
+				navigation.navigate("CharitiesStack", { collection });
 			}}
 		>
 			<View style={styles.rightContainer}>
 				<Image
-					source={collection.img ? { uri: collection.img } : defaultImg}
+					source={collection.image ? { uri: collection.image } : defaultImg}
 					style={styles.image}
 				/>
 				<Text style={styles.text}>{collection.name}</Text>
