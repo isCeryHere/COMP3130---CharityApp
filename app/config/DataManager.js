@@ -3,7 +3,7 @@ export default class DataManager {
 
 	charityId = 0;
   currentUser = {
-		userId: 0,
+		id: 0,
 		image: null,
 		firstName: "Rob",
 		lastName: "Boss",
@@ -12,56 +12,28 @@ export default class DataManager {
 		password: "Abc",
 		collections: [
 			{
-				collectionId: 0,
+				id: 0,
 				name: "Default",
 				creationDate: "28/04/23",
 				image: null,
-				categories: [
-					{
-						categoryId: 0,
-						type: "Education",
-						creation: "28/04/23",
-						charities: [{
-							charityId: 0,
-							name: "Template",
-							img: null,
-							subHeading: "Very Cool and amazing!!",
-							description: "Lorem ipsum stuff",
-							creationDate: "28/04/23",
-							},
-							{
-								charityId: 1,
-								name: "TeamMain",
-								img: null,
-								subHeading: null,
-								description: "quis imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin",
-								creationDate: "28/04/23",
-							},
-						],
+				categories: [ "Education", "Medication", "Cultural", "Environmental", "Disaster"],
+				charities: [{
+					id: 0,
+					name: "Template",
+					category: "Education",
+					image: null,
+					subHeading: "Very Cool and amazing!!",
+					description: "Lorem ipsum stuff",
+					creationDate: "28/04/23",
 					},
 					{
-						categoryId: 1,
-						type: "Medication",
-						creation: "28/04/23",
-						charities: [],
-					},
-					{
-						categoryId: 2,
-						type: "Cultural",
-						creation: "28/04/23",
-						charities: [],
-					},
-					{
-						categoryId: 3,
-						type: "Environmental",
-						creation: "28/04/23",
-						charities: [],
-					},
-					{
-						categoryId: 4,
-						type: "Disaster",
-						creation: "28/04/23",
-						charities: [],
+						id: 1,
+						name: "TeamMain",
+						category: "Medication",
+						image: null,
+						subHeading: null,
+						description: "quis imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin",
+						creationDate: "28/04/23",
 					},
 				],
 			},
@@ -70,7 +42,7 @@ export default class DataManager {
 
 	userData = [
 		{
-			userId: 0,
+			id: 0,
 			firstName: "Rob",
 			lastName: "Boss",
 			email: "Rob@gmail.com",
@@ -78,64 +50,28 @@ export default class DataManager {
 			password: "Abc",
 			collections: [
 				{
-					collectionId: 0,
+					id: 0,
 					name: "Default",
 					creationDate: "28/04/23",
-					categories: [
-						{
-							categoryId: 0,
-							type: "Education",
-							creation: "28/04/23",
-							charities: [{
-								charityId: 0,
-								name: "Template",
-								img: null,
-								subHeading: "Very Cool and amazing!!",
-								description: "Lorem ipsum stuff",
-								creationDate: "28/04/23",
-								},
-								{
-									charityId: 1,
-									name: "TeamMain",
-									img: null,
-									subHeading: null,
-									description: "quis imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin",
-									creationDate: "28/04/23",
-								},
-							],
+					image: null,
+					categories: [ "Education", "Medication", "Cultural", "Environmental", "Disaster"],
+					charities: [{
+						id: 0,
+						name: "Template",
+						category: "Education",
+						img: null,
+						subHeading: "Very Cool and amazing!!",
+						description: "Lorem ipsum stuff",
+						creationDate: "28/04/23",
 						},
 						{
-							categoryId: 1,
-							type: "Medication",
-							creation: "28/04/23",
-							charities: [
-								{
-									charityId: 2,
-									name: "InCat",
-									img: null,
-									subHeading: "Damn This worked?",
-									description: "Lorem ipsum stuff",
-									creationDate: "28/04/23",
-									},
-							],
-						},
-						{
-							categoryId: 2,
-							type: "Cultural",
-							creation: "28/04/23",
-							charities: [],
-						},
-						{
-							categoryId: 3,
-							type: "Environmental",
-							creation: "28/04/23",
-							charities: [],
-						},
-						{
-							categoryId: 4,
-							type: "Disaster",
-							creation: "28/04/23",
-							charities: [],
+							id: 1,
+							name: "TeamMain",
+							category: "Medication",
+							img: null,
+							subHeading: null,
+							description: "quis imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin",
+							creationDate: "28/04/23",
 						},
 					],
 				},
@@ -177,7 +113,7 @@ export default class DataManager {
 		this.userData.splice(id, 1);
 
 		for (let i = id + 1; i < this.userData.length; i++) {
-			this.userData[i].userId = i - 1;
+			this.userData[i].id = i - 1;
 		}
 	}
 	removeCurrentUser() {
@@ -190,53 +126,17 @@ export default class DataManager {
     const collection = {
       collections: [
         {
-          collectionId: 0,
+          id: 0,
           name: "Default",
+					image: null,
           creationDate: currentDate,
-          categories: this.generateDefaultCategories(),
+          categories:  [ "Education", "Medication", "Cultural", "Environmental", "Disaster"],
+					charities: [],
         },
       ],
     };
 
     return collection.collections;
-  }
-  
-  generateDefaultCategories() {
-    const currentDate = new Date().toISOString();
-    const categories = [
-      {
-        categoryId: 0,
-        type: "Education",
-        creation: currentDate,
-        charities: [],
-      },
-      {
-        categoryId: 1,
-        type: "Medication",
-        creation: currentDate,
-        charities: [],
-      },
-      {
-        categoryId: 2,
-        type: "Cultural",
-        creation: currentDate,
-        charities: [],
-      },
-      {
-        categoryId: 3,
-        type: "Environmental",
-        creation: currentDate,
-        charities: [],
-      },
-      {
-        categoryId: 4,
-        type: "Disaster",
-        creation: currentDate,
-        charities: [],
-      },
-    ];
-  
-    return categories;
   }
 
 	getCollections() {
@@ -244,6 +144,19 @@ export default class DataManager {
 			console.error("No Current User");
 			return null;
 		}
+		return this.currentUser.collections;
+	}
+
+	getCategories(collectionId) {
+		if(!this.currentUser) {
+			console.error("No Current User");
+			return null;
+		}
+		return this.currentUser.collections[collectionId].categories;
+	}
+
+	getCharities(collectionId) {
+		return this.collection[collectionId].charities;
 	}
 
 	getAllCharities() {
@@ -251,16 +164,30 @@ export default class DataManager {
 			console.error("No Current User");
 			return null;
 		}
-		const charities = [];
 
+		const charities = [];
+		const categories = [];
 		this.currentUser.collections.map((collection) => {
-			collection.categories.map((category) => {
-				category.charities.map((charity) => {
+			collection.charities.map((charity) => {
 					charities.push(charity);
-				})
+			})
+			collection.categories.map((category) => {
+				const unique = !(categories.filter((inArr) => inArr === category).length > 0)
+				if(unique) {
+					categories.push(category);
+				}
 			})
 		})
 
-		return charities;
+		
+		const dummyCollection = {
+			id: -1,
+			name: "",
+			creationDate: "28/04/23",
+			image: null,
+			categories: categories,
+			charities: charities,
+		}; 
+		return dummyCollection;
 	}
 }

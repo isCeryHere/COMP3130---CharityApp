@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, FlatList } from "react-native";
 
 import AppScreen from "../components/AppScreen";
 import AppColors from "../config/AppColors";
 import Title from "../components/Title";
 import DefaultTextInput from "../components/DefaultTextInput";
-import CollectionTab from "../components/CollectionTab";
+import CollectionTab from "../components/CollectionItem";
 import DataManager from "../config/DataManager";
 
 export default function Collection() {
@@ -14,15 +14,12 @@ export default function Collection() {
 	return (
 		<AppScreen>
 			<Title>Collections</Title>
-			<DefaultTextInput
-				placeholder="Search Collections"
-				style={styles.searchInput}
+			<FlatList 
+				data={collections}
+				renderItem={({item}) => <CollectionTab collection={item} />}
+				keyExtractor={item => item.id}
+				style={styles.container}
 			/>
-			<View style={styles.container}>
-				{collections.map((collection) => (
-					<CollectionTab collection={collection} key={collection.collectionId} />
-				))}
-			</View>
 		</AppScreen>
 	);
 }
@@ -32,8 +29,8 @@ const styles = StyleSheet.create({
 		marginHorizontal: 30,
 	},
 	container: {
+		flex: 1,
 		marginTop: 25,
-		borderWidth: 3,
 		borderColor: AppColors.darkShade,
 	},
 });
