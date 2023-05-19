@@ -131,6 +131,7 @@ export default function Register() {
 							onChangeText={handleChange("email")}
 							onBlur={handleBlur("email")}
 							value={values.email}
+							keyboardType="email-address"
 						/>
 						{submitted && errors.email && <ErrorText>{errors.email}</ErrorText>}
 						<DefaultTextInput
