@@ -59,7 +59,7 @@ export default class DataManager {
 						id: 0,
 						name: "Template",
 						category: "Education",
-						img: null,
+						image: null,
 						subHeading: "Very Cool and amazing!!",
 						description: "Lorem ipsum stuff",
 						creationDate: "28/04/23",
@@ -68,7 +68,7 @@ export default class DataManager {
 							id: 1,
 							name: "TeamMain",
 							category: "Medication",
-							img: null,
+							image: null,
 							subHeading: null,
 							description: "quis imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin",
 							creationDate: "28/04/23",
@@ -103,7 +103,9 @@ export default class DataManager {
 		this.currentUser = user;
 	}
 	updateUser(key, data) {
-		this.currentUser[key] = data;
+		if(key) {
+			this.currentUser[key] = data;
+		}
 		this.userData[this.currentUser.userId] = {...this.currentUser};
 	}
 	generateUserId() {
@@ -142,9 +144,16 @@ export default class DataManager {
 	getCollections() {
 		if(!this.currentUser) {
 			console.error("No Current User");
-			return null;
+			return [];
 		}
 		return this.currentUser.collections;
+	}
+	createCollection(collection) {
+		if(!this.currentUser) {
+			console.error("No Current User");
+			return;
+		}
+		this.currentUser.collections.push(collection);
 	}
 
 	getCategories(collectionId) {
@@ -154,9 +163,27 @@ export default class DataManager {
 		}
 		return this.currentUser.collections[collectionId].categories;
 	}
+	createCategory(collectionId, category) {
+		if(!this.currentUser) {
+			console.error("No Current User");
+			return;
+		}
+		this.currentUser.collections[collectionId].categories.push(category);
+	}
 
 	getCharities(collectionId) {
-		return this.collection[collectionId].charities;
+		if(!this.currentUser) {
+			console.error("No Current User");
+			return null;
+		}
+		return this.currentUser.collections[collectionId].charities;
+	}
+	createCharity(collectionId, charity) {
+		if(!this.currentUser) {
+			console.error("No Current User");
+			return null;
+		}
+		this.currentUser.collections[collectionId].charities.push(charity);
 	}
 
 	getAllCharities() {
