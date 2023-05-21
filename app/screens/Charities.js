@@ -7,15 +7,29 @@ import Title from "../components/Title";
 import CharityItem from "../components/CharityItem";
 import DataManager from "../config/DataManager";
 import CategoryFilter from "../components/CategoryFilter";
+import { useIsFocused } from '@react-navigation/native';
 
 export default function Charities() {
 	const route = useRoute();
 	const dm = DataManager.getInstance();
+	const isFocused = useIsFocused();
 
 	const collection = route.params ? route.params.collection : dm.getAllCharities();
 
 	const [currentCategory, setCurrentCategory] = useState("");
   const [charities, setCharities] = useState(collection.charities);
+
+	useEffect(() => {
+    if (isFocused && collection.id == -1) {
+			const allCharities = dm.getAllCharities();
+			setCharities(allCharities.charities);
+      // Code to run when the screen gains focus
+    }
+    // Cleanup code if needed
+    return () => {
+      // Code to run when the screen loses focus
+    };
+  }, [isFocused]);
 
   useEffect(() => {
     if(currentCategory) {
@@ -25,6 +39,8 @@ export default function Charities() {
       setCharities(collection.charities);
     }
 	}, [currentCategory]);
+
+
 
 	return (
 		<AppScreen>

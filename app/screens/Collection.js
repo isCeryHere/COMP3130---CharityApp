@@ -1,4 +1,7 @@
 import { StyleSheet, Text, View, FlatList } from "react-native";
+import { useEffect, useState } from "react";
+import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import React from "react";
 
 import AppScreen from "../components/AppScreen";
 import AppColors from "../config/AppColors";
@@ -9,7 +12,22 @@ import DataManager from "../config/DataManager";
 
 export default function Collection() {
 	const dm = DataManager.getInstance();
-	const collections = dm.getCurrentUser().collections;
+	const [collections, setCollections] = useState([]);
+	const isFocused = useIsFocused();
+
+	useEffect(() => {
+    if (isFocused) {
+			const fetchedCollections = dm.getCollections();
+			if(fetchedCollections.length != collections.length) {
+				setCollections(fetchedCollections);
+			}
+      // Code to run when the screen gains focus
+    }
+    // Cleanup code if needed
+    return () => {
+      // Code to run when the screen loses focus
+    };
+  }, [isFocused]);
 
 	return (
 		<AppScreen>
@@ -19,6 +37,7 @@ export default function Collection() {
 				renderItem={({item}) => <CollectionTab collection={item} />}
 				keyExtractor={item => item.id}
 				style={styles.container}
+				extraData={collections}
 			/>
 		</AppScreen>
 	);
