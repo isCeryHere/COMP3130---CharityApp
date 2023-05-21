@@ -6,6 +6,7 @@ import {
 	Modal,
 	FlatList,
 	Button,
+	TouchableOpacity,
 } from "react-native";
 import { useState } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -25,7 +26,9 @@ export default function DropPicker({ title, items, value, setValue }) {
 	return (
 		<View>
 			<TouchableHighlight
-				onPress={() => setModalVisible(true)}
+				onPress={() => {
+					setModalVisible(true) 
+				}}
 				style={{ borderRadius: 5 }}
 			>
 				<DefaultTextInput
@@ -50,9 +53,9 @@ export default function DropPicker({ title, items, value, setValue }) {
 				<FlatList
 					data={items}
 					renderItem={({ item }) => (
-						<TouchableHighlight onPress={() => handleItemPress(item)}>
+						<TouchableOpacity onPress={() => handleItemPress(item)}>
 							<Text>{item.name}</Text>
-						</TouchableHighlight>
+						</TouchableOpacity>
 					)}
 					keyExtractor={(item) => item.id}
 				/>
