@@ -22,6 +22,7 @@ export default function TabNavigator() {
 					tabBarIcon: () => (
 						<Ionicons name="folder" size={iconSize} color={AppColors.main} />
 					),
+					unmountOnBlur: true,
 				}}
 			/>
 			<Tab.Screen
