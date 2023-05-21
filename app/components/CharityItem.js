@@ -1,24 +1,40 @@
 import {
 	StyleSheet,
 	Text,
-	TouchableOpacity,
+	Pressable,
 	ImageBackground,
 	View,
+	Vibration,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 
 import AppColors from "../config/AppColors";
 import CharityModal from "./CharityModal";
 
-export default function CharityItem({ charity }) {
+export default function CharityItem({ charity, setOptionState, setCharityId }) {
 	const [modalVisible, setModalVisible] = useState(false);
-	const navigation = useNavigation();
+
+	const handleLongPress = () => {
+		setOptionState(true);
+		setCharityId(charity.id);
+		Vibration.vibrate();
+	}
 	return (
 		<View>
-			<TouchableOpacity style={styles.container} activeOpacity={0.7} onPress={() => setModalVisible(true)}>
-				{charity.img ? (
-					<ImageBackground source={{ uri: charity.img }}>
+			<Pressable
+				style={({ pressed }) => [
+					styles.container,
+					{
+						backgroundColor: pressed
+							? AppColors.darkShade
+							: AppColors.darkAccent,
+					},
+				]}
+				onPress={() => setModalVisible(true)}
+				onLongPress={handleLongPress}
+			>
+				{charity.image ? (
+					<ImageBackground source={{ uri: charity.image }}>
 						<Text style={styles.text}>{charity.name}</Text>
 						<Text style={styles.subHeading}>{charity.subHeading}</Text>
 					</ImageBackground>
@@ -28,8 +44,12 @@ export default function CharityItem({ charity }) {
 						<Text style={styles.subHeading}>{charity.subHeading}</Text>
 					</View>
 				)}
-			</TouchableOpacity>
-      <CharityModal charity={charity} state={modalVisible} setState={setModalVisible} /> 
+			</Pressable>
+			<CharityModal
+				charity={charity}
+				state={modalVisible}
+				setState={setModalVisible}
+			/>
 		</View>
 	);
 }

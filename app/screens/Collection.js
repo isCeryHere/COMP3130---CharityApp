@@ -1,14 +1,16 @@
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, FlatList } from "react-native";
 import { useEffect, useState } from "react";
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import React from "react";
 
 import AppScreen from "../components/AppScreen";
 import AppColors from "../config/AppColors";
 import Title from "../components/Title";
 import DefaultTextInput from "../components/DefaultTextInput";
-import CollectionTab from "../components/CollectionItem";
+import CollectionItem from "../components/CollectionItem";
 import DataManager from "../config/DataManager";
+import OptionModal from "../components/OptionModal";
+import EditItemModal from "../components/EditItemModal";
 
 export default function Collection() {
 	const dm = DataManager.getInstance();
@@ -16,37 +18,67 @@ export default function Collection() {
 	const isFocused = useIsFocused();
 
 	useEffect(() => {
-    if (isFocused) {
+		if (isFocused) {
 			const fetchedCollections = dm.getCollections();
-			if(fetchedCollections.length != collections.length) {
+			if (fetchedCollections.length != collections.length) {
 				setCollections(fetchedCollections);
 			}
-      // Code to run when the screen gains focus
-    }
-    // Cleanup code if needed
-    return () => {
-      // Code to run when the screen loses focus
-    };
-  }, [isFocused]);
+		}
+		return () => {};
+	}, [isFocused]);
+
+	const [selectedCollectionId, setSelectedCollectionId] = useState(0);
+	const [optionModalVisible, setOptionModalVisible] = useState(false);
+	const [editModalVisible, setEditModalVisible] = useState(false);
+	const deleteCollection = () => {
+		dm.deleteCollection(selectedCollectionId);
+		setCollections(dm.getCollections());
+	};
+
+	const editCollection = () => {
+		setEditModalVisible(true);
+	};
 
 	return (
 		<AppScreen>
 			<Title>Collections</Title>
-			<FlatList 
+			<FlatList
 				data={collections}
-				renderItem={({item}) => <CollectionTab collection={item} />}
-				keyExtractor={item => item.id}
+				renderItem={({ item }) => (
+					<CollectionItem
+						collection={item}
+						setOptionState={setOptionModalVisible}
+						setCollectionId={setSelectedCollectionId}
+					/>
+				)}
+				keyExtractor={(item) => item.id}
 				style={styles.container}
 				extraData={collections}
 			/>
+			{collections.length > 0 && (
+				<OptionModal
+					item={collections[selectedCollectionId]}
+					state={optionModalVisible}
+					setState={setOptionModalVisible}
+					handleDelete={deleteCollection}
+					handleEdit={editCollection}
+				/>
+			)}
+			{collections.length > 0 && (
+				<EditItemModal
+					type="Collection"
+					item={collections[selectedCollectionId]}
+					state={editModalVisible}
+					setState={setEditModalVisible}
+					refresh={() => setCollections(dm.getCollections())}
+				/>
+			)}
+
 		</AppScreen>
 	);
 }
 
 const styles = StyleSheet.create({
-	searchInput: {
-		marginHorizontal: 30,
-	},
 	container: {
 		flex: 1,
 		marginTop: 25,
