@@ -81,8 +81,6 @@ export default function Create() {
 			console.log(newCharity);
 			dm.createCharity(collection.id, newCharity);
 		}
-
-		dm.updateUser();
 		alert("Item successfully created")
 		resetForm();
 		setImage(null);
@@ -110,8 +108,7 @@ export default function Create() {
 				<Formik
 					initialValues={{
 						name: "",
-						image: null,
-						description: null,
+						description: "",
 					}}
 					onSubmit={createItem}
 				>
