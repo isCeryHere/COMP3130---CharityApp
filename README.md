@@ -1,12 +1,16 @@
-# Tested
+# CharitEasy Charity Application
 
-- Samsung A22G
+## Tested On
+- Samsung A22
 - iPhone 12
+(App Looks better on Samsung in my opinion)
 
+## Tips
+- Hold finger down on Collection/Charities/Categories to access edit and delete option
+- I used a Samsung A22 for prototyping so it probably looks the best on that
+- Clicking on the Default Profile Image on the Account screen allows you to change it.
 ## Unit Tests
-
 ### User Management
-
 **Requirements**: The system shall allow for the modification of users. <br />
 **User Story**: As a user, I want to create and modify my profile, so I can use the application.
 
