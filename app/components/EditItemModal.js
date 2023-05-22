@@ -9,8 +9,17 @@ import DefaultTextInput from "./DefaultTextInput";
 import AppColors from "../config/AppColors";
 import DataManager from "../config/DataManager";
 import DropPicker from "./DropPicker";
+import CategoryPicker from "./CategoryPicker";
 
-export default function EditItemModal({ type, item, state, setState,  refresh, categories, collectionId }) {
+export default function EditItemModal({
+	type,
+	item,
+	state,
+	setState,
+	refresh,
+	categories,
+	collectionId,
+}) {
 	const [image, setImage] = useState(item.image);
 	const pickImage = async () => {
 		let result = await ImagePicker.launchImageLibraryAsync({
@@ -27,33 +36,32 @@ export default function EditItemModal({ type, item, state, setState,  refresh, c
 
 	const [category, setCategory] = useState(item.category);
 
-  const dm = DataManager.getInstance();
-
-  const handleSubmit = (values) => {
-    if(type==="Collection") {
-      const updatedCollection = {
-        id: item.id,
-        name: values.name,
-        image: image,
-        creationDate: item.creationDate,
-        categories: item.categories,
-        charities: item.charities
-      }
-      dm.updateCollection(updatedCollection);
-    } else if(type==="Charity") {
-      const updatedCharity = {
-        id: item.id,
-        name: values.name,
-        category: category.name ? category.name : category,
-        image: image,
-        description: values.description,
-        creationDate: item.creationDate,
-      }
-      dm.updateCharity(collectionId, updatedCharity);
-    }
-    refresh();
-    setState(false);
-  }
+	const dm = DataManager.getInstance();
+	const handleSubmit = (values) => {
+		if (type === "Collection") {
+			const updatedCollection = {
+				id: item.id,
+				name: values.name,
+				image: image,
+				creationDate: item.creationDate,
+				categories: item.categories,
+				charities: item.charities,
+			};
+			dm.updateCollection(updatedCollection);
+		} else if (type === "Charity") {
+			const updatedCharity = {
+				id: item.id,
+				name: values.name,
+				category: category.name ? category.name : category,
+				image: image,
+				description: values.description,
+				creationDate: item.creationDate,
+			};
+			dm.updateCharity(collectionId, updatedCharity);
+		}
+		refresh();
+		setState(false);
+	};
 	return (
 		<Modal
 			animationType="slide"
@@ -62,19 +70,17 @@ export default function EditItemModal({ type, item, state, setState,  refresh, c
 				setState(false);
 			}}
 		>
-			<View style={{backgroundColor: AppColors.lightShade, flex: 1}}>
+			<View style={{ backgroundColor: AppColors.lightShade, flex: 1 }}>
 				<Title>Edit Item</Title>
 				<Formik
 					initialValues={{
 						name: item.name,
 						description: item.description,
 					}}
-          onSubmit={handleSubmit}
+					onSubmit={handleSubmit}
 				>
 					{({ handleChange, handleBlur, handleSubmit, values }) => (
-						<View
-							style={styles.container}
-						>
+						<View style={styles.container}>
 							<DefaultTextInput
 								placeholder="Name"
 								onChangeText={handleChange("name")}
@@ -82,12 +88,10 @@ export default function EditItemModal({ type, item, state, setState,  refresh, c
 								value={values.name}
 							/>
 							{type === "Charity" && (
-								<View style={{gap: 20}} >
-									<DropPicker
-										title="Select Category"
-										items={categories.map((item, index) => {
-											return { id: index + 1, name: item };
-										})}
+								<View style={{ gap: 20 }}>
+									<CategoryPicker 
+										title="Edit Category"
+										items={categories}
 										value={category}
 										setValue={setCategory}
 									/>
@@ -107,7 +111,7 @@ export default function EditItemModal({ type, item, state, setState,  refresh, c
 								color={AppColors.darkAccent}
 								onPress={pickImage}
 							/>
-							<View style={styles.submitContainer} >
+							<View style={styles.submitContainer}>
 								<Button
 									title="Cancel"
 									color={AppColors.red}
@@ -135,6 +139,5 @@ const styles = StyleSheet.create({
 	submitContainer: {
 		flexDirection: "row",
 		justifyContent: "space-between",
-		
 	},
 });

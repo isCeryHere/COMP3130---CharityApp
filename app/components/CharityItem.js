@@ -14,9 +14,9 @@ import CharityModal from "./CharityModal";
 export default function CharityItem({ charity, setOptionState, setCharityId }) {
 	const [modalVisible, setModalVisible] = useState(false);
 	const handleLongPress = () => {
-		setOptionState(true);
-		setCharityId(charity.id);
+		setCharityId(charity);
 		Vibration.vibrate();
+		setOptionState(true);
 	};
 	return (
 		<View>

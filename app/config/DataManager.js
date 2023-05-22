@@ -210,9 +210,14 @@ export default class DataManager {
 	getAllCharities() {
 		const charities = [];
 		const categories = [];
+
+		let id = 0;
 		this.currentUser.collections.map((collection) => {
 			collection.charities.map((charity) => {
-					charities.push(charity);
+				const newCharity = charity;
+				newCharity.id = id;
+				id++;
+				charities.push(charity);
 			})
 			collection.categories.map((category) => {
 				const unique = !(categories.filter((inArr) => inArr === category).length > 0)
