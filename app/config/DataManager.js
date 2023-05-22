@@ -109,7 +109,7 @@ export default class DataManager {
 		this.userData[this.currentUser.userId] = {...this.currentUser};
 	}
 	generateUserId() {
-		return this.userData.length + 1;
+		return this.userData.length;
 	}
 	deleteUser(id) {
 		this.userData.splice(id, 1);
@@ -145,6 +145,10 @@ export default class DataManager {
 		return this.currentUser.collections;
 	}
 	createCollection(collection) {
+		if (!this.currentUser.collections) {
+			this.currentUser.collections = []; // Initialize as an empty array
+		}
+	
 		this.currentUser.collections.push(collection);
 		this.updateUser();
 	}

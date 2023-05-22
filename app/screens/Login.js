@@ -84,6 +84,7 @@ export default function Login() {
 								handleSubmit();
 							}}
 							style={styles.loginTouchable}
+							testID="login-button"
 						>
 							<View style={styles.loginButton}>
 								<Text style={styles.loginText}>Login</Text>
