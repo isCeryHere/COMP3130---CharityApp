@@ -8,13 +8,13 @@ export default class DataManager {
 		firstName: "Rob",
 		lastName: "Boss",
 		email: "Rob@gmail.com",
-		dob: "20/12/1998",
+		dob: "2023-05-21T09:52:57.461Z",
 		password: "Abc",
 		collections: [
 			{
 				id: 0,
 				name: "Default",
-				creationDate: "28/04/23",
+				creationDate: "2023-05-21T09:52:57.461Z",
 				image: null,
 				categories: [ "Education", "Medication", "Cultural", "Environmental", "Disaster"],
 				charities: [{
@@ -24,7 +24,7 @@ export default class DataManager {
 					image: null,
 					subHeading: "Very Cool and amazing!!",
 					description: "Lorem ipsum stuff",
-					creationDate: "28/04/23",
+					creationDate: "2023-05-21T09:52:57.461Z",
 					},
 					{
 						id: 1,
@@ -33,7 +33,7 @@ export default class DataManager {
 						image: null,
 						subHeading: null,
 						description: "quis imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin",
-						creationDate: "28/04/23",
+						creationDate: "2023-05-21T09:52:57.461Z",
 					},
 				],
 			},
@@ -46,13 +46,13 @@ export default class DataManager {
 			firstName: "Rob",
 			lastName: "Boss",
 			email: "Rob@gmail.com",
-			dob: "20/12/1998",
+			dob: "2023-05-21T09:52:57.461Z",
 			password: "Abc",
 			collections: [
 				{
 					id: 0,
 					name: "Default",
-					creationDate: "28/04/23",
+					creationDate: "2023-05-21T09:52:57.461Z",
 					image: null,
 					categories: [ "Education", "Medication", "Cultural", "Environmental", "Disaster"],
 					charities: [{
@@ -62,7 +62,7 @@ export default class DataManager {
 						image: null,
 						subHeading: "Very Cool and amazing!!",
 						description: "Lorem ipsum stuff",
-						creationDate: "28/04/23",
+						creationDate: "2023-05-21T09:52:57.461Z",
 						},
 						{
 							id: 1,
@@ -71,7 +71,7 @@ export default class DataManager {
 							image: null,
 							subHeading: null,
 							description: "quis imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin",
-							creationDate: "28/04/23",
+							creationDate: "2023-05-21T09:52:57.461Z",
 						},
 					],
 				},
@@ -142,56 +142,72 @@ export default class DataManager {
   }
 
 	getCollections() {
-		if(!this.currentUser) {
-			console.error("No Current User");
-			return [];
-		}
 		return this.currentUser.collections;
 	}
 	createCollection(collection) {
-		if(!this.currentUser) {
-			console.error("No Current User");
-			return;
-		}
 		this.currentUser.collections.push(collection);
+		this.updateUser();
+	}
+	deleteCollection(collectionId) {
+		this.currentUser.collections.splice(collectionId, 1);
+	
+		const collectionLength = this.currentUser.collections.length;
+		for (let i = collectionId; i < collectionLength; i++) {
+			this.currentUser.collections[i].id = i;
+		}
+	
+		this.updateUser();
+	}
+	updateCollection(collection) {
+		this.currentUser.collections[collection.id] = collection;
+		this.updateUser();
 	}
 
 	getCategories(collectionId) {
-		if(!this.currentUser) {
-			console.error("No Current User");
-			return null;
-		}
 		return this.currentUser.collections[collectionId].categories;
 	}
 	createCategory(collectionId, category) {
-		if(!this.currentUser) {
-			console.error("No Current User");
-			return;
-		}
 		this.currentUser.collections[collectionId].categories.push(category);
+		this.updateUser();
+	}
+	deleteCategory(collectionId, category) {
+		const categories = this.getCategories(collectionId);
+		for(let i = 0; i < categories.length; i++) {
+			if(categories[i] === category) {
+				this.currentUser.collections[collectionId].categories.splice(i,1);
+			}
+		}
+
+		const charities = this.getCharities(collectionId);
+		for(let i =0; i < charities.length; i++) {
+			if(charities[i].category === category) {
+				this.currentUser.collections[collectionId].charities[i].category = "";
+			}
+		}
 	}
 
 	getCharities(collectionId) {
-		if(!this.currentUser) {
-			console.error("No Current User");
-			return null;
-		}
 		return this.currentUser.collections[collectionId].charities;
 	}
 	createCharity(collectionId, charity) {
-		if(!this.currentUser) {
-			console.error("No Current User");
-			return null;
-		}
 		this.currentUser.collections[collectionId].charities.push(charity);
+		this.updateUser();
+	}
+	deleteCharity(collectionId, charityId) {
+		this.currentUser.collections[collectionId].charities.splice(charityId,1);
+		
+		const arrLength = this.currentUser.collections[collectionId].charities.length;
+		for (let i = charityId; i < arrLength; i++) {
+			this.currentUser.collections[collectionId].charities[i].id = i;
+		}
+		this.updateUser();
+	}
+	updateCharity(collectionId, charity) {
+		this.currentUser.collections[collectionId].charities[charity.id] = charity;
+		this.updateUser();
 	}
 
 	getAllCharities() {
-		if(!this.currentUser) {
-			console.error("No Current User");
-			return null;
-		}
-
 		const charities = [];
 		const categories = [];
 		this.currentUser.collections.map((collection) => {

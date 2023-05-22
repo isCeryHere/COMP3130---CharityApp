@@ -68,6 +68,7 @@ export default function Charities() {
 						categories={collection.categories}
 						currentCategory={currentCategory}
 						setCurrentCategory={setCurrentCategory}
+						collectionId={collection.id}
 					/>
 					<FlatList
 						data={charities}

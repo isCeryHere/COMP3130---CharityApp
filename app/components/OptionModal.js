@@ -1,15 +1,29 @@
-import { Modal, StyleSheet, Text, View, Dimensions, TouchableOpacity } from "react-native";
+import {
+	Modal,
+	StyleSheet,
+	Text,
+	View,
+	Dimensions,
+	TouchableOpacity,
+	Button,
+} from "react-native";
 import React from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 import AppColors from "../config/AppColors";
 
-export default function OptionModal({ state, setState, item, handleEdit, handleDelete }) {
-
-  const handlePress = (customMethod) => {
-    setState(false);
-    customMethod();
-  }
+export default function OptionModal({
+	state,
+	setState,
+	item,
+	handleEdit,
+	handleDelete,
+	noEdit = false,
+}) {
+	const handlePress = (customMethod) => {
+		setState(false);
+		customMethod();
+	};
 
 	return (
 		<Modal
@@ -23,19 +37,26 @@ export default function OptionModal({ state, setState, item, handleEdit, handleD
 		>
 			<View style={styles.centeredView}>
 				<View style={styles.modalContent}>
-					<Text>{item && item.name}</Text>
+					<Text style={styles.heading}>{item && item.name}</Text>
 					<TouchableOpacity onPress={() => handlePress(handleEdit)}>
-						<View>
-							<Text>Edit</Text>
-							<Ionicons name="create" size={20} color={AppColors.main} />
-						</View>
+						{!noEdit &&
+						<View style={styles.option}>
+						<Text style={styles.optionText}>Edit</Text>
+						<Ionicons name="create" size={25} color={AppColors.main} />
+					</View>
+						}
 					</TouchableOpacity>
 					<TouchableOpacity onPress={() => handlePress(handleDelete)}>
-						<View>
-							<Text>Delete</Text>
-							<Ionicons name="trash" size={20} color="#ed2f2f" />
+						<View style={styles.option}>
+							<Text style={styles.optionText}>Delete</Text>
+							<Ionicons name="trash" size={25} color={AppColors.red} />
 						</View>
 					</TouchableOpacity>
+					<Button
+						title="Close"
+						onPress={() => setState(false)}
+						color={AppColors.red}
+					/>
 				</View>
 			</View>
 		</Modal>
@@ -58,5 +79,25 @@ const styles = StyleSheet.create({
 		padding: 20,
 		borderRadius: 8,
 		bottom: 30,
+	},
+	heading: {
+		fontSize: 20,
+		fontWeight: 600,
+		fontVariant: "small-caps",
+		textDecorationLine: "underline",
+	},
+	option: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		alignItems: "center",
+		paddingVertical: 10,
+		borderWidth: 1,
+		borderRadius: 5,
+		borderColor: "#E0E0E0",
+		paddingHorizontal: 5,
+		marginVertical: 5,
+	},
+	optionText: {
+		fontSize: 16,
 	},
 });
