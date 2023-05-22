@@ -26,7 +26,7 @@ export default function Charities() {
 		if (isFocused && collection.id == -1) {
 			const allCharities = dm.getAllCharities()
 			setCollection(allCharities);
-			setCharities(collection.charities);
+			setCharities(allCharities.charities);
 		}
 		return () => {};
 	}, [isFocused]);
