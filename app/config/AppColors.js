@@ -5,4 +5,5 @@ export default {
   main: "#5500c8",
   lightAccent: "#8ABFFF",
   lightShade: "#F1F7FF",
+  red: "#ed2f2f",
 }
