@@ -44,8 +44,6 @@ export default function Account() {
     dm.removeCurrentUser();
   }
 
-  
-
   const defaultSource = require('../assets/defaultProfile.png');
 	return (
 		<AppScreen>

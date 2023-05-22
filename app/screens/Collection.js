@@ -6,7 +6,6 @@ import React from "react";
 import AppScreen from "../components/AppScreen";
 import AppColors from "../config/AppColors";
 import Title from "../components/Title";
-import DefaultTextInput from "../components/DefaultTextInput";
 import CollectionItem from "../components/CollectionItem";
 import DataManager from "../config/DataManager";
 import OptionModal from "../components/OptionModal";
