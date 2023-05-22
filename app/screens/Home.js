@@ -35,7 +35,7 @@ export default function Home() {
 
 			<View style={styles.dataView}>
 				<Text style={styles.dataColor}>Number of Collections</Text>
-        <Text style={{color: "grey"}}>|</Text>
+				<Text style={{ color: "grey" }}>|</Text>
 				<Text style={styles.dataColor}>Number of Charities</Text>
 			</View>
 
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
 		paddingLeft: 15,
 		paddingRight: 30,
 		paddingVertical: 10,
-    elevation: 10,
+		elevation: 10,
 	},
 	charityTouchable: {
 		backgroundColor: AppColors.lightAccent,
@@ -81,11 +81,11 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		fontWeight: "600",
 	},
-  dataView: {
-    paddingVertical: 30,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 30,
-    elevation: 1,
-  },  
+	dataView: {
+		paddingVertical: 30,
+		flexDirection: "row",
+		justifyContent: "space-between",
+		padding: 30,
+		elevation: 1,
+	},
 });

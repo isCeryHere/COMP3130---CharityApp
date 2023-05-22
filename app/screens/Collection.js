@@ -72,7 +72,6 @@ export default function Collection() {
 					refresh={() => setCollections(dm.getCollections())}
 				/>
 			)}
-
 		</AppScreen>
 	);
 }

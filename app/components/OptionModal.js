@@ -39,12 +39,12 @@ export default function OptionModal({
 				<View style={styles.modalContent}>
 					<Text style={styles.heading}>{item && item.name}</Text>
 					<TouchableOpacity onPress={() => handlePress(handleEdit)}>
-						{!noEdit &&
-						<View style={styles.option}>
-						<Text style={styles.optionText}>Edit</Text>
-						<Ionicons name="create" size={25} color={AppColors.main} />
-					</View>
-						}
+						{!noEdit && (
+							<View style={styles.option}>
+								<Text style={styles.optionText}>Edit</Text>
+								<Ionicons name="create" size={25} color={AppColors.main} />
+							</View>
+						)}
 					</TouchableOpacity>
 					<TouchableOpacity onPress={() => handlePress(handleDelete)}>
 						<View style={styles.option}>

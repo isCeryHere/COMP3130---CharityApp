@@ -26,7 +26,7 @@ export default function Login() {
 	const submitLogin = (values) => {
 		const dm = DataManager.getInstance();
 		const dmUser = dm.getUser(values.email);
-		
+
 		if (!dmUser) {
 			alert("User does not exist");
 			return;
@@ -37,8 +37,9 @@ export default function Login() {
 
 		navigation.dispatch(
 			CommonActions.reset({
-				routes: [{ name: 'Home' }],
-			}));
+				routes: [{ name: "Home" }],
+			})
+		);
 	};
 
 	return (

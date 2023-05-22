@@ -2,7 +2,7 @@ export default class DataManager {
 	static myInstance = null;
 
 	charityId = 0;
-  currentUser = {
+	currentUser = {
 		id: 0,
 		image: null,
 		firstName: "Rob",
@@ -16,15 +16,22 @@ export default class DataManager {
 				name: "Default",
 				creationDate: "2023-05-21T09:52:57.461Z",
 				image: null,
-				categories: [ "Education", "Medication", "Cultural", "Environmental", "Disaster"],
-				charities: [{
-					id: 0,
-					name: "Template",
-					category: "Education",
-					image: null,
-					subHeading: "Very Cool and amazing!!",
-					description: "Lorem ipsum stuff",
-					creationDate: "2023-05-21T09:52:57.461Z",
+				categories: [
+					"Education",
+					"Medication",
+					"Cultural",
+					"Environmental",
+					"Disaster",
+				],
+				charities: [
+					{
+						id: 0,
+						name: "Template",
+						category: "Education",
+						image: null,
+						subHeading: "Very Cool and amazing!!",
+						description: "Lorem ipsum stuff",
+						creationDate: "2023-05-21T09:52:57.461Z",
 					},
 					{
 						id: 1,
@@ -32,7 +39,8 @@ export default class DataManager {
 						category: "Medication",
 						image: null,
 						subHeading: null,
-						description: "quis imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin",
+						description:
+							"quis imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin",
 						creationDate: "2023-05-21T09:52:57.461Z",
 					},
 				],
@@ -54,15 +62,22 @@ export default class DataManager {
 					name: "Default",
 					creationDate: "2023-05-21T09:52:57.461Z",
 					image: null,
-					categories: [ "Education", "Medication", "Cultural", "Environmental", "Disaster"],
-					charities: [{
-						id: 0,
-						name: "Template",
-						category: "Education",
-						image: null,
-						subHeading: "Very Cool and amazing!!",
-						description: "Lorem ipsum stuff",
-						creationDate: "2023-05-21T09:52:57.461Z",
+					categories: [
+						"Education",
+						"Medication",
+						"Cultural",
+						"Environmental",
+						"Disaster",
+					],
+					charities: [
+						{
+							id: 0,
+							name: "Template",
+							category: "Education",
+							image: null,
+							subHeading: "Very Cool and amazing!!",
+							description: "Lorem ipsum stuff",
+							creationDate: "2023-05-21T09:52:57.461Z",
 						},
 						{
 							id: 1,
@@ -70,7 +85,8 @@ export default class DataManager {
 							category: "Medication",
 							image: null,
 							subHeading: null,
-							description: "quis imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin",
+							description:
+								"quis imperdiet massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin",
 							creationDate: "2023-05-21T09:52:57.461Z",
 						},
 					],
@@ -94,8 +110,7 @@ export default class DataManager {
 		return user;
 	}
 	getCurrentUser() {
-		if(this.currentUser)
-			return this.currentUser;
+		if (this.currentUser) return this.currentUser;
 		console.error("No currentUser exists");
 	}
 	createUser(user) {
@@ -103,10 +118,10 @@ export default class DataManager {
 		this.currentUser = user;
 	}
 	updateUser(key, data) {
-		if(key) {
+		if (key) {
 			this.currentUser[key] = data;
 		}
-		this.userData[this.currentUser.userId] = {...this.currentUser};
+		this.userData[this.currentUser.userId] = { ...this.currentUser };
 	}
 	generateUserId() {
 		return this.userData.length;
@@ -122,24 +137,30 @@ export default class DataManager {
 		this.currentUser = null;
 	}
 
-  generateDefaultCollection() {
-    const currentDate = new Date().toISOString();
-    
-    const collection = {
-      collections: [
-        {
-          id: 0,
-          name: "Default",
-					image: null,
-          creationDate: currentDate,
-          categories:  [ "Education", "Medication", "Cultural", "Environmental", "Disaster"],
-					charities: [],
-        },
-      ],
-    };
+	generateDefaultCollection() {
+		const currentDate = new Date().toISOString();
 
-    return collection.collections;
-  }
+		const collection = {
+			collections: [
+				{
+					id: 0,
+					name: "Default",
+					image: null,
+					creationDate: currentDate,
+					categories: [
+						"Education",
+						"Medication",
+						"Cultural",
+						"Environmental",
+						"Disaster",
+					],
+					charities: [],
+				},
+			],
+		};
+
+		return collection.collections;
+	}
 
 	getCollections() {
 		return this.currentUser.collections;
@@ -148,18 +169,18 @@ export default class DataManager {
 		if (!this.currentUser.collections) {
 			this.currentUser.collections = []; // Initialize as an empty array
 		}
-	
+
 		this.currentUser.collections.push(collection);
 		this.updateUser();
 	}
 	deleteCollection(collectionId) {
 		this.currentUser.collections.splice(collectionId, 1);
-	
+
 		const collectionLength = this.currentUser.collections.length;
 		for (let i = collectionId; i < collectionLength; i++) {
 			this.currentUser.collections[i].id = i;
 		}
-	
+
 		this.updateUser();
 	}
 	updateCollection(collection) {
@@ -176,15 +197,15 @@ export default class DataManager {
 	}
 	deleteCategory(collectionId, category) {
 		const categories = this.getCategories(collectionId);
-		for(let i = 0; i < categories.length; i++) {
-			if(categories[i] === category) {
-				this.currentUser.collections[collectionId].categories.splice(i,1);
+		for (let i = 0; i < categories.length; i++) {
+			if (categories[i] === category) {
+				this.currentUser.collections[collectionId].categories.splice(i, 1);
 			}
 		}
 
 		const charities = this.getCharities(collectionId);
-		for(let i =0; i < charities.length; i++) {
-			if(charities[i].category === category) {
+		for (let i = 0; i < charities.length; i++) {
+			if (charities[i].category === category) {
 				this.currentUser.collections[collectionId].charities[i].category = "";
 			}
 		}
@@ -198,9 +219,10 @@ export default class DataManager {
 		this.updateUser();
 	}
 	deleteCharity(collectionId, charityId) {
-		this.currentUser.collections[collectionId].charities.splice(charityId,1);
-		
-		const arrLength = this.currentUser.collections[collectionId].charities.length;
+		this.currentUser.collections[collectionId].charities.splice(charityId, 1);
+
+		const arrLength =
+			this.currentUser.collections[collectionId].charities.length;
 		for (let i = charityId; i < arrLength; i++) {
 			this.currentUser.collections[collectionId].charities[i].id = i;
 		}
@@ -222,16 +244,17 @@ export default class DataManager {
 				newCharity.id = id;
 				id++;
 				charities.push(charity);
-			})
+			});
 			collection.categories.map((category) => {
-				const unique = !(categories.filter((inArr) => inArr === category).length > 0)
-				if(unique) {
+				const unique = !(
+					categories.filter((inArr) => inArr === category).length > 0
+				);
+				if (unique) {
 					categories.push(category);
 				}
-			})
-		})
+			});
+		});
 
-		
 		const dummyCollection = {
 			id: -1,
 			name: "",
@@ -239,7 +262,7 @@ export default class DataManager {
 			image: null,
 			categories: categories,
 			charities: charities,
-		}; 
+		};
 		return dummyCollection;
 	}
 }

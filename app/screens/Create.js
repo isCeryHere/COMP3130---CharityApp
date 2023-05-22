@@ -35,7 +35,6 @@ export default function Create() {
 		}
 	}, [collection]);
 
-
 	const [image, setImage] = useState(null);
 	const pickImage = async () => {
 		let result = await ImagePicker.launchImageLibraryAsync({
@@ -51,29 +50,35 @@ export default function Create() {
 	};
 
 	const createItem = (values, { resetForm }) => {
-		if(!values.name) {
-			alert("Name Field is required")
-			return;	
+		if (!values.name) {
+			alert("Name Field is required");
+			return;
 		}
-		if(itemCreate.name === "Collection") {
+		if (itemCreate.name === "Collection") {
 			const newImage = image ? image : null;
 			const newCollection = {
 				id: collections.length,
 				name: values.name,
 				creationDate: new Date().toISOString(),
 				image: newImage,
-				categories: [ "Education", "Medication", "Cultural", "Environmental", "Disaster"],
-				charities: []
-			}
+				categories: [
+					"Education",
+					"Medication",
+					"Cultural",
+					"Environmental",
+					"Disaster",
+				],
+				charities: [],
+			};
 			dm.createCollection(newCollection);
-		} else if(itemCreate.name === "Category") {
+		} else if (itemCreate.name === "Category") {
 			dm.createCategory(collection.id, values.name);
 			const fetchCategory = dm.getCategories(collection.id);
 			const categoryStructure = fetchCategory.map((item, index) => {
 				return { id: index + 1, name: item };
 			});
 			setCategories(categoryStructure);
-		} else if(itemCreate.name === "Charity") {
+		} else if (itemCreate.name === "Charity") {
 			const newImage = image ? image : null;
 			const newCharity = {
 				id: collection.charities.length,
@@ -82,22 +87,22 @@ export default function Create() {
 				image: newImage,
 				description: values.description,
 				creationDate: new Date().toISOString(),
-			}
+			};
 			dm.createCharity(collection.id, newCharity);
 		}
 		setItemCreate({});
-		setCollection({})
+		setCollection({});
 		setCategory({});
 
-		alert("Item successfully created")
+		alert("Item successfully created");
 		resetForm();
 		setImage(null);
-	}
+	};
 
 	return (
 		<AppScreen>
 			<Title>Create</Title>
-			<View style={{gap: 20, paddingHorizontal: 30}} >
+			<View style={{ gap: 20, paddingHorizontal: 30 }}>
 				<DropPicker
 					title="Select Creation Type"
 					items={creation}
@@ -121,7 +126,7 @@ export default function Create() {
 					onSubmit={createItem}
 				>
 					{({ handleChange, handleBlur, handleSubmit, values }) => (
-						<View style={{gap: 20}} >
+						<View style={{ gap: 20 }}>
 							{itemCreate.name && (
 								<DefaultTextInput
 									placeholder="Name"
@@ -131,33 +136,35 @@ export default function Create() {
 								/>
 							)}
 							{itemCreate.name === "Charity" && (
-							<View style={{gap: 20}} >
-								<DropPicker
-									title="Select Category"
-									items={categories}
-									value={category}
-									setValue={setCategory}
-								/>
-								<DefaultTextInput
-									placeholder="Description"
-									onChangeText={handleChange("description")}
-									onBlur={handleBlur("description")}
-									value={values.description}
-									multiline={true}
-									textAlignVertical="top"
-									rows={6}
-								/>
-							</View>
+								<View style={{ gap: 20 }}>
+									<DropPicker
+										title="Select Category"
+										items={categories}
+										value={category}
+										setValue={setCategory}
+									/>
+									<DefaultTextInput
+										placeholder="Description"
+										onChangeText={handleChange("description")}
+										onBlur={handleBlur("description")}
+										value={values.description}
+										multiline={true}
+										textAlignVertical="top"
+										rows={6}
+									/>
+								</View>
 							)}
 							{(itemCreate.name === "Collection" ||
 								itemCreate.name === "Charity") && (
-									<>
-								<Button
-									title="Choose an Image"
-									color={AppColors.darkAccent}
-									onPress={pickImage}
-								/>
-								{image && <Text style={{fontSize: 14}}>Image Selected</Text>}
+								<>
+									<Button
+										title="Choose an Image"
+										color={AppColors.darkAccent}
+										onPress={pickImage}
+									/>
+									{image && (
+										<Text style={{ fontSize: 14 }}>Image Selected</Text>
+									)}
 								</>
 							)}
 							{itemCreate.name && (
@@ -175,4 +182,4 @@ export default function Create() {
 	);
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

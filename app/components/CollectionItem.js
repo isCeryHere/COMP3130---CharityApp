@@ -1,4 +1,11 @@
-import { StyleSheet, Text, Image, View, Pressable, Vibration } from "react-native";
+import {
+	StyleSheet,
+	Text,
+	Image,
+	View,
+	Pressable,
+	Vibration,
+} from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
@@ -6,7 +13,11 @@ import { useState } from "react";
 import AppColors from "../config/AppColors";
 import OptionModal from "./OptionModal";
 
-export default function CollectionItem({ collection, setOptionState, setCollectionId }) {
+export default function CollectionItem({
+	collection,
+	setOptionState,
+	setCollectionId,
+}) {
 	const navigation = useNavigation();
 	const defaultImg = require("../assets/defaultFolder.png");
 
@@ -14,10 +25,15 @@ export default function CollectionItem({ collection, setOptionState, setCollecti
 		setOptionState(true);
 		setCollectionId(collection.id);
 		Vibration.vibrate();
-	}
+	};
 	return (
 		<Pressable
-		style={({ pressed }) => [styles.touchableContainer, { backgroundColor: pressed ? AppColors.darkShade : AppColors.darkAccent }]}
+			style={({ pressed }) => [
+				styles.touchableContainer,
+				{
+					backgroundColor: pressed ? AppColors.darkShade : AppColors.darkAccent,
+				},
+			]}
 			activeOpacity={0.8}
 			onPress={() => {
 				navigation.navigate("CharitiesStack", { collection });

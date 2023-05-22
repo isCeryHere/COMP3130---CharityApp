@@ -89,7 +89,7 @@ export default function EditItemModal({
 							/>
 							{type === "Charity" && (
 								<View style={{ gap: 20 }}>
-									<CategoryPicker 
+									<CategoryPicker
 										title="Edit Category"
 										items={categories}
 										value={category}

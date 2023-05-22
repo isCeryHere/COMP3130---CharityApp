@@ -41,7 +41,7 @@ export default function CategoryFilter({
 	};
 
 	const deleteCategory = () => {
-		if(collectionId == -1) {
+		if (collectionId == -1) {
 			alert("Must be in Collection Tab to edit Category");
 			return;
 		}

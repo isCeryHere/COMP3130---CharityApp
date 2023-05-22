@@ -32,18 +32,18 @@ export default function CharityItem({ charity, setOptionState, setCharityId }) {
 				onPress={() => setModalVisible(true)}
 				onLongPress={handleLongPress}
 			>
-					<View>
-						<Text style={styles.title}>{charity.name}</Text>
-						<Text style={styles.subHeading}>{charity.category}</Text>
-					</View>
-					<View>
-						{charity.image &&
-						<Image 
-							source={{uri: charity.image}}
+				<View>
+					<Text style={styles.title}>{charity.name}</Text>
+					<Text style={styles.subHeading}>{charity.category}</Text>
+				</View>
+				<View>
+					{charity.image && (
+						<Image
+							source={{ uri: charity.image }}
 							style={styles.charityImage}
 						/>
-						}
-					</View>
+					)}
+				</View>
 			</Pressable>
 			<CharityModal
 				charity={charity}

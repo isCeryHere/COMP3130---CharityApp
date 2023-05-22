@@ -37,7 +37,7 @@ export default function Register() {
 			return;
 		}
 
-		const user = { 
+		const user = {
 			userId: dm.generateUserId(),
 			image: null,
 			email: values.email,
@@ -51,7 +51,6 @@ export default function Register() {
 		dm.createUser(user);
 		navigation.navigate("Home");
 	};
-
 
 	return (
 		<AppScreen>

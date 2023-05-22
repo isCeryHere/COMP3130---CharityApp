@@ -24,7 +24,7 @@ export default function Charities() {
 
 	useEffect(() => {
 		if (isFocused && collection.id == -1) {
-			const allCharities = dm.getAllCharities()
+			const allCharities = dm.getAllCharities();
 			setCollection(allCharities);
 			setCharities(allCharities.charities);
 		}
