@@ -75,9 +75,6 @@ export default function Login() {
 						{submitted && errors.password && (
 							<ErrorText>{errors.password}</ErrorText>
 						)}
-						<View style={{ alignItems: "flex-end" }}>
-							<TextLink>Forgot Password?</TextLink>
-						</View>
 						<TouchableHighlight
 							onPress={() => {
 								setSubmitted(true);
