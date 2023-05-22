@@ -12,16 +12,19 @@ import OptionModal from "../components/OptionModal";
 import EditItemModal from "../components/EditItemModal";
 
 export default function Charities() {
+	// Import necessary modules and functions
 	const route = useRoute();
 	const dm = DataManager.getInstance();
 	const isFocused = useIsFocused();
 
+	// Set up state variables
 	const [collection, setCollection] = useState(
 		route.params ? route.params.collection : dm.getAllCharities()
 	);
 	const [currentCategory, setCurrentCategory] = useState("");
 	const [charities, setCharities] = useState(collection.charities);
 
+	// Fetch the charities and update state when the screen is focused
 	useEffect(() => {
 		if (isFocused && collection.id == -1) {
 			const allCharities = dm.getAllCharities();
@@ -31,6 +34,7 @@ export default function Charities() {
 		return () => {};
 	}, [isFocused]);
 
+	// Filter the charities based on the current category
 	useEffect(() => {
 		if (currentCategory) {
 			const filteredCharities = collection.charities.filter(
@@ -42,6 +46,7 @@ export default function Charities() {
 		}
 	}, [currentCategory]);
 
+	// Set up state for option and edit modals
 	const [optionModalVisible, setOptionModalVisible] = useState(false);
 	const [editModalVisible, setEditModalVisible] = useState(false);
 	const [selectedCharity, setSelectedCharity] = useState({});

@@ -16,12 +16,16 @@ import DataManager from "../config/DataManager";
 import AppColors from "../config/AppColors";
 
 export default function Account() {
+	// Import Navigation Function
 	const navigation = useNavigation();
 
+	// Get an instance of DataManager and fetch the current user
 	const dm = DataManager.getInstance();
 	const user = dm.getCurrentUser();
-	const [image, setImage] = useState(user.image);
 
+	// Set up state for the user's image
+	const [image, setImage] = useState(user.image);
+	// Function to pick an image from the image library
 	const pickImage = async () => {
 		let result = await ImagePicker.launchImageLibraryAsync({
 			mediaTypes: ImagePicker.MediaTypeOptions.Image,
@@ -30,16 +34,21 @@ export default function Account() {
 			quality: 1,
 		});
 
+		// Update the image state if an image is selected
 		if (!result.canceled) {
 			setImage(result.assets[0].uri);
 		}
 	};
 
+	// Event handler for the image press
 	const handlePress = () => {
 		pickImage();
 		dm.updateUser("image", image);
 	};
+
+	// Event handler for the logout button
 	const handleLogout = () => {
+		// Reset the navigation stack to the Hero screen
 		navigation.dispatch(
 			CommonActions.reset({
 				index: 0,
@@ -50,6 +59,7 @@ export default function Account() {
 		dm.removeCurrentUser();
 	};
 
+	// Set the default source for the profile image
 	const defaultSource = require("../assets/defaultProfile.png");
 	return (
 		<AppScreen>

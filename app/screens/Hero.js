@@ -2,8 +2,6 @@ import {
 	StyleSheet,
 	Text,
 	View,
-	Image,
-	TouchableHighlight,
 } from "react-native";
 
 import AppScreen from "../components/AppScreen";

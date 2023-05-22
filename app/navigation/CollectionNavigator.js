@@ -8,7 +8,10 @@ export default function CollectionNavigator() {
 	const Stack = createStackNavigator();
 
 	return (
-		<Stack.Navigator screenOptions={{ headerShown: false  }} initialRouteName="CollectionStack">
+		<Stack.Navigator
+			screenOptions={{ headerShown: false }}
+			initialRouteName="CollectionStack"
+		>
 			<Stack.Screen name="CollectionStack" component={Collection} />
 			<Stack.Screen name="CharitiesStack" component={Charities} />
 		</Stack.Navigator>

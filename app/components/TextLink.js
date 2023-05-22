@@ -5,7 +5,6 @@ import { useNavigation } from "@react-navigation/native";
 export default function TextLink({ children, navigateTo }) {
 	const navigation = useNavigation();
 
-	// TODO: Change Navigation
 	return (
 		<TouchableOpacity onPress={() => navigation.navigate(navigateTo)}>
 			<Text style={styles.text}>{children}</Text>

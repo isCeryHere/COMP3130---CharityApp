@@ -1,6 +1,6 @@
 import { StyleSheet, FlatList } from "react-native";
 import { useEffect, useState } from "react";
-import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+import { useIsFocused } from "@react-navigation/native";
 import React from "react";
 
 import AppScreen from "../components/AppScreen";
@@ -12,10 +12,12 @@ import OptionModal from "../components/OptionModal";
 import EditItemModal from "../components/EditItemModal";
 
 export default function Collection() {
+	// Import necessary modules and functions
 	const dm = DataManager.getInstance();
 	const [collections, setCollections] = useState([]);
 	const isFocused = useIsFocused();
 
+	// Fetch collections and update state when the screen is focused
 	useEffect(() => {
 		if (isFocused) {
 			const fetchedCollections = dm.getCollections();
@@ -26,9 +28,11 @@ export default function Collection() {
 		return () => {};
 	}, [isFocused]);
 
+	// Set up state for option and edit modals
 	const [selectedCollectionId, setSelectedCollectionId] = useState(0);
 	const [optionModalVisible, setOptionModalVisible] = useState(false);
 	const [editModalVisible, setEditModalVisible] = useState(false);
+
 	const deleteCollection = () => {
 		dm.deleteCollection(selectedCollectionId);
 		setCollections(dm.getCollections());

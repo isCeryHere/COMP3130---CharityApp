@@ -4,7 +4,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Hero from "../screens/Hero";
 import Login from "../screens/Login";
 import Register from "../screens/Register";
-import Home from "../screens/Home";
 import TabNavigator from "./TabNavigator";
 
 export default function AuthNavigator() {

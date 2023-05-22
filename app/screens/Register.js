@@ -13,6 +13,7 @@ import DataManager from "../config/DataManager";
 import ErrorText from "../components/ErrorText";
 
 export default function Register() {
+	// Define validation schema using yup for form validation
 	const validationSchema = yup.object({
 		firstName: yup.string().required("First Name is required"),
 		lastName: yup.string().required("Last Name is required"),
@@ -24,19 +25,23 @@ export default function Register() {
 		password: yup.string().required("Password is required"),
 	});
 
-	// Visibility
+	// State variables for controlling visibility
 	const [showDate, setShowDate] = useState(false);
 	const [submitted, setSubmitted] = useState(false);
 
 	const navigation = useNavigation();
 
+	// Function to handle registration form submission
 	const submitRegistration = (values) => {
 		const dm = DataManager.getInstance();
+
+		// Check if the email is already in use
 		if (dm.getUser(values.email)) {
 			alert("Email is already in use");
 			return;
 		}
 
+		// Create a new user object
 		const user = {
 			userId: dm.generateUserId(),
 			image: null,
@@ -48,10 +53,12 @@ export default function Register() {
 			collections: dm.generateDefaultCollection(),
 		};
 
+		// Call the create user method in the data manager
 		dm.createUser(user);
+
+		// Navigate to the home screen
 		navigation.navigate("Home");
 	};
-
 	return (
 		<AppScreen>
 			<Text style={styles.heading}>Sign Up</Text>

@@ -27,14 +27,17 @@ export default function Login() {
 		const dm = DataManager.getInstance();
 		const dmUser = dm.getUser(values.email);
 
+		// Check if the user exists in the data manager
 		if (!dmUser) {
 			alert("User does not exist");
 			return;
 		} else if (dmUser.password !== values.password) {
+			// Check if the password is correct
 			alert("Login Failed");
 			return;
 		}
 
+		// Reset the navigation stack and navigate to the Home screen
 		navigation.dispatch(
 			CommonActions.reset({
 				routes: [{ name: "Home" }],

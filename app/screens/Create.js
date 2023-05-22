@@ -11,6 +11,7 @@ import DefaultTextInput from "../components/DefaultTextInput";
 import { Formik } from "formik";
 
 export default function Create() {
+	// Import necessary modules and functions
 	const dm = DataManager.getInstance();
 
 	const [itemCreate, setItemCreate] = useState({});
@@ -27,6 +28,7 @@ export default function Create() {
 	const [category, setCategory] = useState({});
 	useEffect(() => {
 		if (collection.name) {
+			// Fetch categories for the selected collection and structure them
 			const fetchCategory = dm.getCategories(collection.id);
 			const categoryStructure = fetchCategory.map((item, index) => {
 				return { id: index + 1, name: item };
@@ -55,6 +57,7 @@ export default function Create() {
 			return;
 		}
 		if (itemCreate.name === "Collection") {
+			// Create a new collection
 			const newImage = image ? image : null;
 			const newCollection = {
 				id: collections.length,
@@ -72,6 +75,7 @@ export default function Create() {
 			};
 			dm.createCollection(newCollection);
 		} else if (itemCreate.name === "Category") {
+			// Create a new category
 			dm.createCategory(collection.id, values.name);
 			const fetchCategory = dm.getCategories(collection.id);
 			const categoryStructure = fetchCategory.map((item, index) => {
@@ -79,6 +83,7 @@ export default function Create() {
 			});
 			setCategories(categoryStructure);
 		} else if (itemCreate.name === "Charity") {
+			// Create a new charity
 			const newImage = image ? image : null;
 			const newCharity = {
 				id: collection.charities.length,
@@ -90,13 +95,15 @@ export default function Create() {
 			};
 			dm.createCharity(collection.id, newCharity);
 		}
+
+		// Reset state and form
 		setItemCreate({});
 		setCollection({});
 		setCategory({});
-
-		alert("Item successfully created");
 		resetForm();
 		setImage(null);
+
+		alert("Item successfully created");
 	};
 
 	return (
