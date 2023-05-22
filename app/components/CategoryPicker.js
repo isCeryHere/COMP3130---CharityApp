@@ -7,6 +7,7 @@ import {
 	FlatList,
 	Button,
 	TouchableOpacity,
+	Platform,
 } from "react-native";
 import { useState } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -16,22 +17,22 @@ import Title from "./Title";
 import AppColors from "../config/AppColors";
 
 export default function CategoryPicker({ title, items, value, setValue }) {
-  const [modalVisible, setModalVisible] = useState(false);
+	const [modalVisible, setModalVisible] = useState(false);
 
 	const handleItemPress = (item) => {
 		setValue(item);
 		setModalVisible(false);
 	};
 
-  return (
-    <View>
+	return (
+		<View>
 			<TouchableHighlight
 				onPress={() => {
 					setModalVisible(true);
 				}}
 				style={{ borderRadius: 5 }}
 			>
-				<>
+				<View pointerEvents="none">
 					<DefaultTextInput
 						placeholder={title}
 						placeholderTextColor="gray"
@@ -42,7 +43,7 @@ export default function CategoryPicker({ title, items, value, setValue }) {
 					<View style={styles.iconOverlay}>
 						<Ionicons name="chevron-down" size={40} color="black" />
 					</View>
-				</>
+				</View>
 			</TouchableHighlight>
 
 			<Modal
@@ -52,28 +53,34 @@ export default function CategoryPicker({ title, items, value, setValue }) {
 					setModalVisible(false);
 				}}
 			>
-				<View style={{backgroundColor: AppColors.lightShade, flex: 1}}>
-				<Title>{title}</Title>
-				<FlatList
-					data={items}
-					renderItem={({ item }) => (
-						<TouchableOpacity onPress={() => handleItemPress(item)} style={styles.item}>
-							<Text style={styles.itemText}>{item}</Text>
-						</TouchableOpacity>
+				<View style={{ backgroundColor: AppColors.lightShade, flex: 1 }}>
+					<Title>{title}</Title>
+					<FlatList
+						data={items}
+						renderItem={({ item }) => (
+							<TouchableOpacity
+								onPress={() => handleItemPress(item)}
+								style={styles.item}
+							>
+								<Text style={styles.itemText}>{item}</Text>
+							</TouchableOpacity>
+						)}
+						keyExtractor={(item) => item}
+						style={{ paddingHorizontal: 30 }}
+					/>
+
+					<Button
+						title="Close"
+						onPress={() => setModalVisible(false)}
+						color={AppColors.main}
+					/>
+					{Platform.OS === "ios" && (
+						<View style={{ paddingVertical: 15 }}></View>
 					)}
-					keyExtractor={(item) => item}
-					style={{paddingHorizontal: 30}}
-				/>
-				<Button
-					title="Close"
-					onPress={() => setModalVisible(false)}
-					color={AppColors.main}
-					style={styles.button}
-				/>
 				</View>
 			</Modal>
 		</View>
-  )
+	);
 }
 
 const styles = StyleSheet.create({
@@ -104,5 +111,9 @@ const styles = StyleSheet.create({
 	clearText: {
 		fontWeight: 500,
 		fontSize: 16,
+	},
+	button: {
+		width: 60,
+		marginBottom: 30,
 	},
 });

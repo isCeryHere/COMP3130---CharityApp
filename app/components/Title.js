@@ -12,10 +12,11 @@ export default function Title({children}) {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    paddingVertical: 20,
+    paddingTop: 30,
+    paddingBottom: 10,
   },
   text: {
-    fontSize: 30,
+    fontSize: 25,
     fontWeight: "bold",
     fontVariant: "small-caps"
   },

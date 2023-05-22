@@ -98,7 +98,7 @@ export default function Register() {
 							onPress={() => setShowDate(true)}
 							style={styles.dateTouchable}
 						>
-							{/* Touchable Highlight doesn't work without this view element */}
+							{/* Touchable Highlight doesn't work on IOS without this view element */}
 							<View pointerEvents="none">
 								<DefaultTextInput
 									placeholder="Date of Birth"

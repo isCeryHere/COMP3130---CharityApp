@@ -31,7 +31,7 @@ export default function Hero() {
 
 const styles = StyleSheet.create({
   header: {
-    flex: 1,
+    flex: .5,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     
   },
   catch: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
   },
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     textAlign: "center",
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
   },
   buttonContainer: {
     gap: 15,

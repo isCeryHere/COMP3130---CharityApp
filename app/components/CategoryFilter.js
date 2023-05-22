@@ -95,6 +95,9 @@ export default function CategoryFilter({
 						color={AppColors.main}
 						onPress={() => setCategoryModalVisible(false)}
 					/>
+					{Platform.OS === "ios" && (
+						<View style={{ paddingVertical: 15 }}></View>
+					)}
 				</View>
 				<OptionModal
 					state={optionModalVisible}

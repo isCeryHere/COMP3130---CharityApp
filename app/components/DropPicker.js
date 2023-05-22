@@ -31,7 +31,7 @@ export default function DropPicker({ title, items, value, setValue }) {
 				}}
 				style={{ borderRadius: 5 }}
 			>
-				<>
+				<View pointerEvents="none">
 					<DefaultTextInput
 						placeholder={title}
 						placeholderTextColor="gray"
@@ -42,7 +42,7 @@ export default function DropPicker({ title, items, value, setValue }) {
 					<View style={styles.iconOverlay}>
 						<Ionicons name="chevron-down" size={40} color="black" />
 					</View>
-				</>
+				</View>
 			</TouchableHighlight>
 
 			<Modal
@@ -52,24 +52,30 @@ export default function DropPicker({ title, items, value, setValue }) {
 					setModalVisible(false);
 				}}
 			>
-				<View style={{backgroundColor: AppColors.lightShade, flex: 1}}>
-				<Title>{title}</Title>
-				<FlatList
-					data={items}
-					renderItem={({ item }) => (
-						<TouchableOpacity onPress={() => handleItemPress(item)} style={styles.item}>
-							<Text style={styles.itemText}>{item.name}</Text>
-						</TouchableOpacity>
+				<View style={{ backgroundColor: AppColors.lightShade, flex: 1 }}>
+					<Title>{title}</Title>
+					<FlatList
+						data={items}
+						renderItem={({ item }) => (
+							<TouchableOpacity
+								onPress={() => handleItemPress(item)}
+								style={styles.item}
+							>
+								<Text style={styles.itemText}>{item.name}</Text>
+							</TouchableOpacity>
+						)}
+						keyExtractor={(item) => item.id}
+						style={{ paddingHorizontal: 30 }}
+					/>
+					<Button
+						title="Close"
+						onPress={() => setModalVisible(false)}
+						color={AppColors.main}
+						style={styles.button}
+					/>
+					{Platform.OS === "ios" && (
+						<View style={{ paddingVertical: 15 }}></View>
 					)}
-					keyExtractor={(item) => item.id}
-					style={{paddingHorizontal: 30}}
-				/>
-				<Button
-					title="Close"
-					onPress={() => setModalVisible(false)}
-					color={AppColors.main}
-					style={styles.button}
-				/>
 				</View>
 			</Modal>
 		</View>
