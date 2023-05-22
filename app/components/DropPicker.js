@@ -27,21 +27,24 @@ export default function DropPicker({ title, items, value, setValue }) {
 		<View>
 			<TouchableHighlight
 				onPress={() => {
-					setModalVisible(true) 
+					setModalVisible(true);
 				}}
 				style={{ borderRadius: 5 }}
 			>
-				<DefaultTextInput
-					placeholder={title}
-					placeholderTextColor="gray"
-					color="black"
-					readOnly
-					value={value.name}
-				/>
+				<>
+					<DefaultTextInput
+						placeholder={title}
+						placeholderTextColor="gray"
+						color="black"
+						readOnly
+						value={value.name}
+					/>
+					<View style={styles.iconOverlay}>
+						<Ionicons name="chevron-down" size={40} color="black" />
+					</View>
+				</>
 			</TouchableHighlight>
-			<View style={styles.iconOverlay}>
-				<Ionicons name="chevron-down" size={40} color="black" />
-			</View>
+
 			<Modal
 				animationType="slide"
 				visible={modalVisible}
@@ -49,21 +52,25 @@ export default function DropPicker({ title, items, value, setValue }) {
 					setModalVisible(false);
 				}}
 			>
+				<View style={{backgroundColor: AppColors.lightShade, flex: 1}}>
 				<Title>{title}</Title>
 				<FlatList
 					data={items}
 					renderItem={({ item }) => (
-						<TouchableOpacity onPress={() => handleItemPress(item)}>
-							<Text>{item.name}</Text>
+						<TouchableOpacity onPress={() => handleItemPress(item)} style={styles.item}>
+							<Text style={styles.itemText}>{item.name}</Text>
 						</TouchableOpacity>
 					)}
 					keyExtractor={(item) => item.id}
+					style={{paddingHorizontal: 30}}
 				/>
 				<Button
 					title="Close"
 					onPress={() => setModalVisible(false)}
 					color={AppColors.main}
+					style={styles.button}
 				/>
+				</View>
 			</Modal>
 		</View>
 	);
@@ -74,5 +81,28 @@ const styles = StyleSheet.create({
 		position: "absolute",
 		top: 10,
 		right: 10,
+	},
+	item: {
+		marginVertical: 5,
+		padding: 10,
+		borderRadius: 5,
+		borderWidth: 2,
+		borderStyle: "dashed",
+		borderColor: AppColors.darkShade,
+	},
+	itemText: {
+		fontSize: 16,
+	},
+	clearButton: {
+		marginHorizontal: 30,
+		marginVertical: 20,
+		padding: 10,
+		borderRadius: 5,
+		borderWidth: 3,
+		borderColor: AppColors.red,
+	},
+	clearText: {
+		fontWeight: 500,
+		fontSize: 16,
 	},
 });

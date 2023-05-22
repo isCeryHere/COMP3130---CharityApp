@@ -14,7 +14,7 @@ export default function TabNavigator() {
 	const Tab = createBottomTabNavigator();
 	const iconSize = 35;
 	return (
-		<Tab.Navigator screenOptions={{ headerShown: false }}>
+		<Tab.Navigator screenOptions={{ headerShown: false, tabBarStyle: {backgroundColor: AppColors.lightShade}}}>
 			<Tab.Screen
 				name="Collection"
 				component={CollectionNavigator}

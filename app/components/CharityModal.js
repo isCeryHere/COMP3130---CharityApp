@@ -40,7 +40,6 @@ const screenWidth = Dimensions.get("window").width * 0.8;
 const screenHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
-	container: {},
 	centeredView: {
 		flex: 1,
 		justifyContent: "center",

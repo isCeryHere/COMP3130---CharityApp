@@ -61,9 +61,8 @@ export default function EditItemModal({ type, item, state, setState,  refresh, c
 			onRequestClose={() => {
 				setState(false);
 			}}
-			style={styles.container}
 		>
-			<View>
+			<View style={{backgroundColor: AppColors.lightShade, flex: 1}}>
 				<Title>Edit Item</Title>
 				<Formik
 					initialValues={{
@@ -73,7 +72,9 @@ export default function EditItemModal({ type, item, state, setState,  refresh, c
           onSubmit={handleSubmit}
 				>
 					{({ handleChange, handleBlur, handleSubmit, values }) => (
-						<View>
+						<View
+							style={styles.container}
+						>
 							<DefaultTextInput
 								placeholder="Name"
 								onChangeText={handleChange("name")}
@@ -81,7 +82,7 @@ export default function EditItemModal({ type, item, state, setState,  refresh, c
 								value={values.name}
 							/>
 							{type === "Charity" && (
-								<View>
+								<View style={{gap: 20}} >
 									<DropPicker
 										title="Select Category"
 										items={categories.map((item, index) => {
@@ -95,18 +96,21 @@ export default function EditItemModal({ type, item, state, setState,  refresh, c
 										onChangeText={handleChange("description")}
 										onBlur={handleBlur("description")}
 										value={values.description}
+										multiline={true}
+										textAlignVertical="top"
+										rows={8}
 									/>
 								</View>
 							)}
 							<Button
 								title="Change Image"
-								color={AppColors.main}
+								color={AppColors.darkAccent}
 								onPress={pickImage}
 							/>
-							<View>
+							<View style={styles.submitContainer} >
 								<Button
 									title="Cancel"
-									color="#ed2f2f"
+									color={AppColors.red}
 									onPress={() => setState(false)}
 								/>
 								<Button
@@ -123,4 +127,14 @@ export default function EditItemModal({ type, item, state, setState,  refresh, c
 	);
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	container: {
+		paddingHorizontal: 30,
+		gap: 20,
+	},
+	submitContainer: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+		
+	},
+});

@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, View, Text } from "react-native";
 import { useState, useEffect } from "react";
 import * as ImagePicker from "expo-image-picker";
 
@@ -68,6 +68,11 @@ export default function Create() {
 			dm.createCollection(newCollection);
 		} else if(itemCreate.name === "Category") {
 			dm.createCategory(collection.id, values.name);
+			const fetchCategory = dm.getCategories(collection.id);
+			const categoryStructure = fetchCategory.map((item, index) => {
+				return { id: index + 1, name: item };
+			});
+			setCategories(categoryStructure);
 		} else if(itemCreate.name === "Charity") {
 			const newImage = image ? image : null;
 			const newCharity = {
@@ -78,9 +83,12 @@ export default function Create() {
 				description: values.description,
 				creationDate: new Date().toISOString(),
 			}
-			console.log(newCharity);
 			dm.createCharity(collection.id, newCharity);
 		}
+		setItemCreate({});
+		setCollection({})
+		setCategory({});
+
 		alert("Item successfully created")
 		resetForm();
 		setImage(null);
@@ -89,7 +97,7 @@ export default function Create() {
 	return (
 		<AppScreen>
 			<Title>Create</Title>
-			<View>
+			<View style={{gap: 20, paddingHorizontal: 30}} >
 				<DropPicker
 					title="Select Creation Type"
 					items={creation}
@@ -113,7 +121,7 @@ export default function Create() {
 					onSubmit={createItem}
 				>
 					{({ handleChange, handleBlur, handleSubmit, values }) => (
-						<View>
+						<View style={{gap: 20}} >
 							{itemCreate.name && (
 								<DefaultTextInput
 									placeholder="Name"
@@ -123,7 +131,7 @@ export default function Create() {
 								/>
 							)}
 							{itemCreate.name === "Charity" && (
-							<View>
+							<View style={{gap: 20}} >
 								<DropPicker
 									title="Select Category"
 									items={categories}
@@ -135,16 +143,22 @@ export default function Create() {
 									onChangeText={handleChange("description")}
 									onBlur={handleBlur("description")}
 									value={values.description}
+									multiline={true}
+									textAlignVertical="top"
+									rows={6}
 								/>
 							</View>
 							)}
 							{(itemCreate.name === "Collection" ||
 								itemCreate.name === "Charity") && (
+									<>
 								<Button
 									title="Choose an Image"
-									color={AppColors.main}
+									color={AppColors.darkAccent}
 									onPress={pickImage}
 								/>
+								{image && <Text style={{fontSize: 14}}>Image Selected</Text>}
+								</>
 							)}
 							{itemCreate.name && (
 								<Button
